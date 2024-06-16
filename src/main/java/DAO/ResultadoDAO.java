@@ -1,35 +1,42 @@
 package DAO;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import DTO.Resultado;
+
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
-public class PedidoDAO {
+public class ResultadoDAO {
     private ConexaoSQLite conexao = new ConexaoSQLite();
-    public PedidoDAO(){
+
+    public ResultadoDAO(){
         try{
-            String sql = "create table if not exists pedido(id int primary key auto_increment, " +
-                    "data_pedido date, valor_total float)";
+            String sql = "create table if not exists resultado(" +
+                    "    id int primary key auto_increment," +
+                    "    descricao varchar(300)" +
+                    ");";
             if(conexao.conectar()){
                 Statement stmt = conexao.retornaStatement();
                 stmt.execute(sql);
             }
-        } catch (SQLException err){
-            System.out.println(err.getMessage());
-        } finally {
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
             conexao.desconectar();
         }
     }
-    public int inserir(Pedido obj){
+    public int inserir(Resultado obj){
         int cont = 0;
         try{
             if(conexao.conectar()){
-                String sql = "insert into pedido(id,data_pedido,valor_total) values(?,?,?)";
+                String sql = "insert into resultado" +
+                        "    (descricao)" +
+                        "    values (?);";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
-                stmt.setInt(1, obj.getId());
-                stmt.setString(2, obj.getData());
-                stmt.setFloat(3, obj.getTotal());
+                stmt.setString(1, obj.getDescricao());
                 cont = stmt.executeUpdate();
             }
         }
@@ -41,15 +48,16 @@ public class PedidoDAO {
             return cont;
         }
     }
-    public int alterar(Pedido obj){
+    public int alterar(Resultado obj){
         int cont = 0;
         try{
             if(conexao.conectar()){
-                String sql = "update pedido set id=?,data_pedido=?,valor_total=?";
+                String sql = "update resultado" +
+                        "    set descricao = ?)" +
+                        "    where id = ?";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
-                stmt.setInt(1, obj.getId());
-                stmt.setString(2, obj.getData());
-                stmt.setFloat(3, obj.getTotal());
+                stmt.setString(1, obj.getDescricao());
+                stmt.setInt(2, obj.getId());
                 cont = stmt.executeUpdate();
             }
         }
@@ -61,11 +69,11 @@ public class PedidoDAO {
             return cont;
         }
     }
-    public int remover(Pedido obj){
+    public int remover(Resultado obj){
         int cont = 0;
         try{
             if(conexao.conectar()){
-                String sql = "delete from pedido where id=?";
+                String sql = "delete from resultado where id=?";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
                 stmt.setInt(1, obj.getId());
                 cont = stmt.executeUpdate();
@@ -79,27 +87,26 @@ public class PedidoDAO {
             return cont;
         }
     }
-    public Pedido pesquisar(int codigo){
-        Pedido ped = new Pedido();
+    public Resultado pesquisar(int codigo){
+        Resultado obj = new Resultado();
         try{
             if(conexao.conectar()){
-                String sql = "select * from pedido where id = ?";
+                String sql = "select *  from resultado where id=?";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
                 stmt.setInt(1, codigo);
                 ResultSet resultado = stmt.executeQuery();
                 if(! resultado.isClosed()){
-                    ped.setId(resultado.getInt("id"));
-                    ped.setData(resultado.getString("data_pedido"));
-                    ped.setTotal(resultado.getFloat("valor"));
+                    obj.setId(resultado.getInt("id"));
+                    obj.setDescricao(resultado.getString("descricao"));
                 }
             }
-
-        }catch(SQLException err){
+        }
+        catch(SQLException err){
             System.err.println(err.getMessage());
         }
         finally{
             conexao.desconectar();
-            return ped;
+            return obj;
         }
     }
 }
