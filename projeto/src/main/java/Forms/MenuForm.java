@@ -4,16 +4,23 @@ import Forms.utils.RoundedBorder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Login extends javax.swing.JFrame {
+public class MenuForm extends javax.swing.JFrame {
     private Container c;
-    private JLabel title;
+    private JButton pacienteBtn;
+    private JButton funcBtn;
+    private JLabel pacienteImg;
+    private JLabel funcImg;
 
-    public Login() {
+
+    public MenuForm() {
         setTitle("Login");
-        setBounds(300, 90, 900, 600);
+        setSize(900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+        setLocationRelativeTo(null);
 
         c = getContentPane();
         c.setLayout(null);
@@ -22,7 +29,7 @@ public class Login extends javax.swing.JFrame {
         p1.setBackground(new Color(255, 255, 232));
         p1.setSize(900, 125);
         p1.setLocation(0, 0);
-        title = new JLabel("Tela de login");
+        JLabel title = new JLabel("Tela de login");
         title.setFont(new Font("Inter", Font.BOLD, 30));
         title.setForeground(new Color(43, 37, 93, 255));
         p1.add(title);
@@ -35,12 +42,14 @@ public class Login extends javax.swing.JFrame {
 
         ClassLoader cldr = this.getClass().getClassLoader();
         java.net.URL pacienteImageURL = cldr.getResource("forms/utils/paciente.png");
-        JLabel pacienteImg = new JLabel(new ImageIcon(pacienteImageURL));
+        pacienteImg = new JLabel(new ImageIcon("forms/utils/paciente.png"));
         pacienteImg.setLocation(175, 25);
+
+        asdsdsxas
         pacienteImg.setSize(200, 100);
         p2.add(pacienteImg);
 
-        JButton pacienteBtn = new JButton("Entrar como paciente");
+        pacienteBtn = new JButton("Entrar como paciente");
         pacienteBtn.setBorder(new RoundedBorder(20, 2));
         pacienteBtn.setForeground(new Color(43, 37, 93, 191));
         pacienteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -61,13 +70,13 @@ public class Login extends javax.swing.JFrame {
         pacienteBtn.setLocation(150, 120);
         p2.add(pacienteBtn);
 
-        java.net.URL funcImageURL = cldr.getResource("forms/utils/funcionario.png");
-        JLabel funcImg = new JLabel(new ImageIcon(funcImageURL));
+        java.net.URL funcImageURL = cldr.getResource("Forms/utils/funcionario.png");
+        funcImg = new JLabel(new ImageIcon(funcImageURL));
         funcImg.setLocation(525, 20);
         funcImg.setSize(200, 100);
         p2.add(funcImg);
 
-        JButton funcBtn = new JButton("Entrar como funcionário");
+        funcBtn = new JButton("Entrar como funcionário");
         funcBtn.setBorder(new RoundedBorder(20, 2));
         funcBtn.setForeground(new Color(43, 37, 93, 191));
         funcBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -89,6 +98,15 @@ public class Login extends javax.swing.JFrame {
         p2.add(funcBtn);
 
         c.add(p2);
+
+        funcBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.setVisible(false);
+                dispose();
+                PacienteForm telaPaciente = new PacienteForm();
+            }
+        });
 
         setVisible(true);
     }
