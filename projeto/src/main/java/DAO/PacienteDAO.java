@@ -15,9 +15,9 @@ public class PacienteDAO {
         try{
             String sql = "create table if not exists paciente(" +
                     "    id int primary key auto_increment," +
-                    "    cpf varchar(11)," +
+                    "    cpf varchar(11) unique," +
                     "    nome varchar(60)," +
-                    "    email varchar(50)," +
+                    "    email varchar(50) unique," +
                     "    data_nasc date," +
                     "    ativo bool," +
                     "    senha varchar(50)" +
@@ -46,7 +46,7 @@ public class PacienteDAO {
                 stmt.setString(2, obj.getNome());
                 stmt.setString(3, obj.getEmail());
                 stmt.setDate(4, new java.sql.Date(obj.getDataNascimento().getTime()));
-                stmt.setBoolean(5, obj.isAtivo());
+                stmt.setBoolean(5, obj.getAtivo());
                 stmt.setString(6, obj.getSenha());
                 cont = stmt.executeUpdate();
             }
@@ -71,7 +71,7 @@ public class PacienteDAO {
                 stmt.setString(2, obj.getNome());
                 stmt.setString(3, obj.getEmail());
                 stmt.setDate(4, new java.sql.Date(obj.getDataNascimento().getTime()));
-                stmt.setBoolean(5, obj.isAtivo());
+                stmt.setBoolean(5, obj.getAtivo());
                 stmt.setString(6, obj.getSenha());
                 stmt.setInt(7, obj.getId());
                 cont = stmt.executeUpdate();

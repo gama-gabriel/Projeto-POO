@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class FuncionarioDAO {
     private ConexaoSQLite conexao = new ConexaoSQLite();
@@ -14,10 +16,10 @@ public class FuncionarioDAO {
     public FuncionarioDAO(){
         try{
             String sql = "create table if not exists funcionario(" +
-                    "    id int primary key auto_increment," +
-                    "    cpf varchar(11)," +
+                    "    id integer primary key autoincrement,"+
+                    "    cpf varchar(11) unique," +
                     "    nome varchar(60)," +
-                    "    email varchar(50)," +
+                    "    email varchar(50) unique," +
                     "    data_nasc date," +
                     "    ativo bool," +
                     "    cargo varchar(30)," +
@@ -47,7 +49,7 @@ public class FuncionarioDAO {
                 stmt.setString(2, obj.getNome());
                 stmt.setString(3, obj.getEmail());
                 stmt.setDate(4, new java.sql.Date(obj.getDataNascimento().getTime()));
-                stmt.setBoolean(5, obj.isAtivo());
+                stmt.setBoolean(5, obj.getAtivo());
                 stmt.setString(6, obj.getCargo());
                 stmt.setString(7, obj.getSenha());
                 cont = stmt.executeUpdate();
@@ -73,7 +75,7 @@ public class FuncionarioDAO {
                 stmt.setString(2, obj.getNome());
                 stmt.setString(3, obj.getEmail());
                 stmt.setDate(4, new java.sql.Date(obj.getDataNascimento().getTime()));
-                stmt.setBoolean(5, obj.isAtivo());
+                stmt.setBoolean(5, obj.getAtivo());
                 stmt.setString(6, obj.getCargo());
                 stmt.setString(7, obj.getSenha());
                 stmt.setInt(8, obj.getId());
@@ -133,6 +135,45 @@ public class FuncionarioDAO {
         finally{
             conexao.desconectar();
             return obj;
+        }
+    }
+    public List<Funcionario> retornaLista(String busca){
+        List<Funcionario> lista = new ArrayList<Funcionario>();
+        try{
+            if(conexao.conectar()){
+                PreparedStatement stmt;
+                if(busca.length() > 0){
+                    stmt = conexao.preparedStatement("select *  from funcionario "
+                            + "where nome like ? order by nome");
+                    stmt.setString(1, "%"+ busca + "%");
+                } else {
+                    stmt = conexao.preparedStatement("select *  from funcionario "
+                            + "order by nome");
+                }
+                ResultSet resultado = stmt.executeQuery();
+                while(resultado.next()){
+                    Funcionario obj = new Funcionario();
+                    obj.setId(resultado.getInt("id"));
+                    obj.setCpf(resultado.getString("cpf"));
+                    obj.setNome(resultado.getString("nome"));
+                    obj.setEmail(resultado.getString("email"));
+                    obj.setDataNascimento(resultado.getDate("data_nasc"));
+                    obj.setAtivo(resultado.getBoolean("ativo"));
+                    obj.setCargo(resultado.getString("cargo"));
+                    obj.setSenha(resultado.getString("senha"));
+                    lista.add(obj);
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return lista;
         }
     }
 }
