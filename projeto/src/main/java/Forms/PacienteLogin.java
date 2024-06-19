@@ -2,6 +2,7 @@ package Forms;
 
 import DAO.PacienteDAO;
 import DTO.Paciente;
+import DTO.PacienteCadastro;
 
 import javax.swing.*;
 import java.awt.*;
@@ -86,7 +87,9 @@ public class PacienteLogin extends JFrame {
         });
         cadastroLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JOptionPane.showMessageDialog(null, "Abrir tela de cadastro");
+                c.setVisible(false);
+                dispose();
+                PacienteCadastro telaCadastroPaciente = new PacienteCadastro();
             }
         });
 

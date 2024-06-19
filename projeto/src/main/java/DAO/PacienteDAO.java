@@ -14,7 +14,7 @@ public class PacienteDAO {
     public PacienteDAO(){
         try{
             String sql = "create table if not exists paciente(" +
-                    "    id int primary key," +
+                    "    id integer primary key autoincrement," +
                     "    cpf varchar(11)," +
                     "    nome varchar(60)," +
                     "    email varchar(50)," +
@@ -39,16 +39,15 @@ public class PacienteDAO {
         try{
             if(conexao.conectar()){
                 String sql = "insert into paciente" +
-                        "    (id, cpf, nome, email, data_nasc, ativo, senha)" +
-                        "    values (?,?,?,?,?,?,?);";
+                        "    ( cpf, nome, email, data_nasc, ativo, senha)" +
+                        "    values (?,?,?,?,?,?);";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
-                stmt.setInt(1,obj.getId());
-                stmt.setString(2, obj.getCpf());
-                stmt.setString(3, obj.getNome());
-                stmt.setString(4, obj.getEmail());
-                stmt.setDate(5, new java.sql.Date(obj.getDataNascimento().getTime()));
-                stmt.setBoolean(6, obj.isAtivo());
-                stmt.setString(7, obj.getSenha());
+                stmt.setString(1, obj.getCpf());
+                stmt.setString(2, obj.getNome());
+                stmt.setString(3, obj.getEmail());
+                stmt.setDate(4, new java.sql.Date(obj.getDataNascimento().getTime()));
+                stmt.setBoolean(5, obj.isAtivo());
+                stmt.setString(6, obj.getSenha());
                 cont = stmt.executeUpdate();
             }
         }
@@ -132,6 +131,53 @@ public class PacienteDAO {
             return obj;
         }
     }
+
+    public boolean pesquisaCpf(String cpf){
+        boolean encontrei = false;
+        try{
+            if(conexao.conectar()){
+                String sql = "select count(*) as total from paciente where cpf=?";
+                PreparedStatement stmt = conexao.preparedStatement(sql);
+                stmt.setString(1, cpf);
+                ResultSet resultado = stmt.executeQuery();
+                int count = resultado.getInt("total");
+                if( count > 0){
+                    encontrei = true;
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return encontrei;
+        }
+    }
+
+    public boolean pesquisaEmail(String email){
+        boolean encontrei = false;
+        try{
+            if(conexao.conectar()){
+                String sql = "select count(*) as total from paciente where email=?";
+                PreparedStatement stmt = conexao.preparedStatement(sql);
+                stmt.setString(1, email);
+                ResultSet resultado = stmt.executeQuery();
+                int count = resultado.getInt("total");
+                if( count > 0){
+                    encontrei = true;
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return encontrei;
+        }
+    }
+
     public Paciente login(String email, String senha){
         Paciente obj = new Paciente();
         try{

@@ -5,7 +5,7 @@ import DAO.PacienteDAO;
 public class Paciente extends Pessoa {
     private int id;
 
-    private PacienteDAO dao;
+    public  PacienteDAO dao;
 
     public Paciente() {
     }
