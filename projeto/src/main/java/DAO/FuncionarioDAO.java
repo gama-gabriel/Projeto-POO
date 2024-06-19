@@ -207,4 +207,49 @@ public class FuncionarioDAO {
             return obj;
         }
     };
+    public boolean pesquisaCpf(String cpf){
+        boolean encontrei = false;
+        try{
+            if(conexao.conectar()){
+                String sql = "select count(*) as total from funcionario where cpf=?";
+                PreparedStatement stmt = conexao.preparedStatement(sql);
+                stmt.setString(1, cpf);
+                ResultSet resultado = stmt.executeQuery();
+                int count = resultado.getInt("total");
+                if( count > 0){
+                    encontrei = true;
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return encontrei;
+        }
+    }
+
+    public boolean pesquisaEmail(String email){
+        boolean encontrei = false;
+        try{
+            if(conexao.conectar()){
+                String sql = "select count(*) as total from funcionario where email=?";
+                PreparedStatement stmt = conexao.preparedStatement(sql);
+                stmt.setString(1, email);
+                ResultSet resultado = stmt.executeQuery();
+                int count = resultado.getInt("total");
+                if( count > 0){
+                    encontrei = true;
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return encontrei;
+        }
+    }
 }

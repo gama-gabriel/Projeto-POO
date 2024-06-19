@@ -1,5 +1,6 @@
 package DTO;
 
+import DAO.FuncionarioDAO;
 import DAO.PacienteDAO;
 import Forms.FuncionarioMenuForm;
 import Forms.utils.RoundedBorder;
@@ -179,7 +180,7 @@ public class FuncionarioCadastro extends JFrame {
     }
 
     private boolean validarCampos() {
-        PacienteDAO validador = new PacienteDAO();
+        FuncionarioDAO validador = new FuncionarioDAO();
         String cpf = cpfField.getText();
         String email = emailField.getText();
         String nome = nomeField.getText();
