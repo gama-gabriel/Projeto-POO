@@ -50,7 +50,7 @@ public abstract class Pessoa {
         this.dataNascimento = dataNascimento;
     }
 
-    public boolean isAtivo() {
+    public boolean getAtivo() {
         return ativo;
     }
 

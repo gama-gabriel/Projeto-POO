@@ -7,8 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 public class Main {
-    public static void main(String[] args) throws Exception
-    {
+    public static void main(String[] args) throws Exception {
 //        Paciente p1 = new Paciente();
 //        p1.setId(1);
 //        p1.setCpf("12345678911");

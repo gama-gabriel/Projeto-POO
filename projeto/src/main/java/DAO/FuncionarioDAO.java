@@ -47,7 +47,7 @@ public class FuncionarioDAO {
                 stmt.setString(2, obj.getNome());
                 stmt.setString(3, obj.getEmail());
                 stmt.setDate(4, new java.sql.Date(obj.getDataNascimento().getTime()));
-                stmt.setBoolean(5, obj.isAtivo());
+                stmt.setBoolean(5, obj.getAtivo());
                 stmt.setString(6, obj.getCargo());
                 stmt.setString(7, obj.getSenha());
                 cont = stmt.executeUpdate();
@@ -73,7 +73,7 @@ public class FuncionarioDAO {
                 stmt.setString(2, obj.getNome());
                 stmt.setString(3, obj.getEmail());
                 stmt.setDate(4, new java.sql.Date(obj.getDataNascimento().getTime()));
-                stmt.setBoolean(5, obj.isAtivo());
+                stmt.setBoolean(5, obj.getAtivo());
                 stmt.setString(6, obj.getCargo());
                 stmt.setString(7, obj.getSenha());
                 stmt.setInt(8, obj.getId());
