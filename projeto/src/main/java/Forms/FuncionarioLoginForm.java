@@ -1,4 +1,5 @@
 package Forms;
+import DTO.Funcionario;
 import Forms.utils.RoundedBorder;
 import java.awt.*;
 import javax.swing.*;
@@ -195,9 +196,17 @@ public class FuncionarioLoginForm extends JFrame {
         botaoLogar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                c.setVisible(false);
-                dispose();
-                FuncionarioLoginForm telaLoginFunc = new FuncionarioLoginForm();
+                String email = textoLogin.getText();
+                String senha = new String(textoSenha.getPassword());
+                Funcionario aux = new Funcionario();
+
+                Funcionario funcLogado = aux.autenticacao(email, senha);
+
+                if (funcLogado.getId() != 0) {
+                    JOptionPane.showMessageDialog(null, "Login bem-sucedido!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Email ou senha incorretos.");
+                }
             }
         });
         botaoLogar.setVisible(true);

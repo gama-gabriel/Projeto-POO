@@ -1,6 +1,7 @@
 package DAO;
 
 import DTO.Funcionario;
+import DTO.Paciente;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -176,4 +177,34 @@ public class FuncionarioDAO {
             return lista;
         }
     }
+    public Funcionario login(String email, String senha){
+        Funcionario obj = new Funcionario();
+        try{
+            if(conexao.conectar()){
+                String sql = "select * from funcionario where email = ? and senha = ?";
+                PreparedStatement stmt = conexao.preparedStatement(sql);
+                stmt.setString(1, email);
+                stmt.setString(2, senha);
+                ResultSet resultado = stmt.executeQuery();
+                if( !resultado.isClosed()) {
+                    obj.setId(resultado.getInt("id"));
+                    obj.setCpf(resultado.getString("cpf"));
+                    obj.setNome(resultado.getString("nome"));
+                    obj.setEmail(resultado.getString("email"));
+                    java.sql.Date sqlDate = resultado.getDate("data_nasc");
+                    obj.setDataNascimento(new Date(sqlDate.getTime()));
+                    obj.setAtivo(resultado.getBoolean("ativo"));
+                    obj.setCargo(resultado.getString("cargo"));
+                    obj.setSenha(resultado.getString("senha"));
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return obj;
+        }
+    };
 }
