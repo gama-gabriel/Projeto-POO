@@ -17,7 +17,7 @@ public class MenuForm extends javax.swing.JFrame {
 
     public MenuForm() {
         setTitle("Menu");
-        setSize(900, 600);
+        setSize(900, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);

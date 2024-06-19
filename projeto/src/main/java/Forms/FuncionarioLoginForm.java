@@ -9,9 +9,6 @@ import java.awt.event.*;
 
 public class FuncionarioLoginForm extends JFrame {
     private Container c;
-    private JButton pacienteBtn;
-    private JButton funcBtn;
-    private JLabel funcImg;
     private JLabel labelLogin;
     private JTextArea textoLogin;
     private JLabel labelSenha;
@@ -21,7 +18,7 @@ public class FuncionarioLoginForm extends JFrame {
 
     public FuncionarioLoginForm() {
         setTitle("Login funcionário");
-        setSize(900, 600);
+        setSize(900, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -46,7 +43,7 @@ public class FuncionarioLoginForm extends JFrame {
 
         labelLogin = new JLabel("Login (e-mail):");
         labelLogin.setSize(200, 40);
-        labelLogin.setLocation(325, 50);
+        labelLogin.setLocation(325, 0);
         labelLogin.setFont(new Font("Inter", Font.BOLD, 16));
         labelLogin.setForeground(new Color(43, 37, 93, 255));
         labelLogin.setVisible(true);
@@ -62,7 +59,7 @@ public class FuncionarioLoginForm extends JFrame {
             }
         };
         textoLogin.setSize(250, 30);
-        textoLogin.setLocation(325, 90);
+        textoLogin.setLocation(325, 40);
         textoLogin.setOpaque(false);
         textoLogin.setFont(new Font("Inter", Font.PLAIN, 14));
         textoLogin.setForeground(new Color(43, 37, 93, 255));
@@ -83,7 +80,7 @@ public class FuncionarioLoginForm extends JFrame {
 
         JTextArea border = new JTextArea();
         border.setSize(252, 32);
-        border.setLocation(324, 89);
+        border.setLocation(324, 39);
         border.setForeground(new Color(43, 37, 93, 255));
         border.setBorder(new RoundedBorder(1,1));
         border.setEnabled(false);
@@ -92,7 +89,7 @@ public class FuncionarioLoginForm extends JFrame {
 
         labelSenha = new JLabel("Senha:");
         labelSenha.setSize(200, 40);
-        labelSenha.setLocation(325, 130);
+        labelSenha.setLocation(325, 80);
         labelSenha.setFont(new Font("Inter", Font.BOLD, 16));
         labelSenha.setForeground(new Color(43, 37, 93, 255));
         labelSenha.setVisible(true);
@@ -108,7 +105,7 @@ public class FuncionarioLoginForm extends JFrame {
             }
         };
         textoSenha.setSize(250, 30);
-        textoSenha.setLocation(325, 170);
+        textoSenha.setLocation(325, 120);
         textoSenha.setOpaque(false);
         textoSenha.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createEmptyBorder(), // No outer border
@@ -133,7 +130,7 @@ public class FuncionarioLoginForm extends JFrame {
 
         JTextArea border2 = new JTextArea();
         border2.setSize(252, 32);
-        border2.setLocation(324, 169);
+        border2.setLocation(324, 119);
         border2.setForeground(new Color(43, 37, 93, 255));
         border2.setBorder(new RoundedBorder(1,1));
         border2.setEnabled(false);
@@ -144,8 +141,8 @@ public class FuncionarioLoginForm extends JFrame {
         botaoSemCadastro.setContentAreaFilled(false);
         botaoSemCadastro.setFocusPainted(false);
         botaoSemCadastro.setSize(140, 30);
-        botaoSemCadastro.setLocation(325, 205);
-        botaoSemCadastro.setText("Não estou cadastrado");
+        botaoSemCadastro.setLocation(380, 245);
+        botaoSemCadastro.setText("Cadastre-se");
         botaoSemCadastro.setFont(new Font("Inter", Font.PLAIN, 14));
         botaoSemCadastro.setForeground(new Color(43, 37, 93, 191));
         botaoSemCadastro.setBorder((javax.swing.BorderFactory.createEmptyBorder()));
@@ -174,8 +171,8 @@ public class FuncionarioLoginForm extends JFrame {
         botaoLogar = new JButton();
         botaoLogar.setContentAreaFilled(false);
         botaoLogar.setFocusPainted(false);
-        botaoLogar.setSize(250, 50);
-        botaoLogar.setLocation(325, 255);
+        botaoLogar.setSize(130, 45);
+        botaoLogar.setLocation(385, 195);
         botaoLogar.setText("Entrar");
         botaoLogar.setFont(new Font("Inter", Font.BOLD, 16));
         botaoLogar.setForeground(new Color(255, 255, 232));
@@ -204,6 +201,9 @@ public class FuncionarioLoginForm extends JFrame {
 
                 if (funcLogado.getId() != 0) {
                     JOptionPane.showMessageDialog(null, "Login bem-sucedido!");
+                    c.setVisible(false);
+                    dispose();
+                    FuncionarioMenuForm telaFuncLogado = new FuncionarioMenuForm(funcLogado);
                 } else {
                     JOptionPane.showMessageDialog(null, "Email ou senha incorretos.");
                 }
