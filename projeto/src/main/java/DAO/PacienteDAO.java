@@ -15,10 +15,10 @@ public class PacienteDAO {
         try{
             String sql = "create table if not exists paciente(" +
 
-                    "    id int primary key," +
-                    "    cpf varchar(11)," +
+                    "    id integer primary key autoincrement," +
+                    "    cpf varchar(11) unique," +
                     "    nome varchar(60)," +
-                    "    email varchar(50)," +
+                    "    email varchar(50) unique," +
                     "    data_nasc date," +
                     "    ativo bool," +
                     "    senha varchar(50)" +
@@ -40,17 +40,16 @@ public class PacienteDAO {
         try{
             if(conexao.conectar()){
                 String sql = "insert into paciente" +
-                        "    (id, cpf, nome, email, data_nasc, ativo, senha)" +
-                        "    values (?,?,?,?,?,?,?);";
+                        "    (cpf, nome, email, data_nasc, ativo, senha)" +
+                        "    values (?,?,?,?,?,?);";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
 
-                stmt.setInt(1,obj.getId());
-                stmt.setString(2, obj.getCpf());
-                stmt.setString(3, obj.getNome());
-                stmt.setString(4, obj.getEmail());
-                stmt.setDate(5, new java.sql.Date(obj.getDataNascimento().getTime()));
-                stmt.setBoolean(6, obj.getAtivo());
-                stmt.setString(7, obj.getSenha());
+                stmt.setString(1, obj.getCpf());
+                stmt.setString(2, obj.getNome());
+                stmt.setString(3, obj.getEmail());
+                stmt.setDate(4, new java.sql.Date(obj.getDataNascimento().getTime()));
+                stmt.setBoolean(5, obj.getAtivo());
+                stmt.setString(6, obj.getSenha());
 
                 cont = stmt.executeUpdate();
             }
