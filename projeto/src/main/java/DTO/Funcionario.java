@@ -5,7 +5,7 @@ import DAO.FuncionarioDAO;
 public class Funcionario extends Pessoa {
     private int id;
     private String cargo;
-    private FuncionarioDAO dao;
+    public FuncionarioDAO dao;
 
     public Funcionario() {
     }

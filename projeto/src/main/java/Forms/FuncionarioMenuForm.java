@@ -37,7 +37,7 @@ public class FuncionarioMenuForm extends JFrame {
         JLabel labelLogado = new JLabel("Funcionário:", SwingConstants.CENTER);
         labelLogado.setSize(150, 25);
         labelLogado.setLocation(700, 35);
-        labelLogado.setFont(new Font("Inter", Font.PLAIN, 16));
+        labelLogado.setFont(new Font("Inter", Font.PLAIN, 14));
         labelLogado.setForeground(new Color(43, 37, 93, 255));
         labelLogado.setVisible(true);
         p1.add(labelLogado);
@@ -45,7 +45,7 @@ public class FuncionarioMenuForm extends JFrame {
         funcLogado = new JLabel(logado.getNome(), SwingConstants.CENTER);
         funcLogado.setSize(150, 25);
         funcLogado.setLocation(700, 55);
-        funcLogado.setFont(new Font("Inter", Font.BOLD, 16));
+        funcLogado.setFont(new Font("Inter", Font.PLAIN, 14));
         funcLogado.setForeground(new Color(43, 37, 93, 255));
         funcLogado.setVisible(true);
         p1.add(funcLogado);

@@ -1,5 +1,6 @@
 package Forms;
 import DTO.Funcionario;
+import DTO.FuncionarioCadastro;
 import Forms.utils.RoundedBorder;
 import java.awt.*;
 import javax.swing.*;
@@ -141,7 +142,7 @@ public class FuncionarioLoginForm extends JFrame {
         botaoSemCadastro.setContentAreaFilled(false);
         botaoSemCadastro.setFocusPainted(false);
         botaoSemCadastro.setSize(140, 30);
-        botaoSemCadastro.setLocation(380, 245);
+        botaoSemCadastro.setLocation(380, 225);
         botaoSemCadastro.setText("Cadastre-se");
         botaoSemCadastro.setFont(new Font("Inter", Font.PLAIN, 14));
         botaoSemCadastro.setForeground(new Color(43, 37, 93, 191));
@@ -162,7 +163,7 @@ public class FuncionarioLoginForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 c.setVisible(false);
                 dispose();
-                FuncionarioLoginForm telaLoginFunc = new FuncionarioLoginForm();
+                FuncionarioCadastro telaCadastroFunc = new FuncionarioCadastro();
             }
         });
         botaoSemCadastro.setVisible(true);
@@ -172,7 +173,7 @@ public class FuncionarioLoginForm extends JFrame {
         botaoLogar.setContentAreaFilled(false);
         botaoLogar.setFocusPainted(false);
         botaoLogar.setSize(130, 45);
-        botaoLogar.setLocation(385, 195);
+        botaoLogar.setLocation(385, 175);
         botaoLogar.setText("Entrar");
         botaoLogar.setFont(new Font("Inter", Font.BOLD, 16));
         botaoLogar.setForeground(new Color(255, 255, 232));
@@ -200,7 +201,6 @@ public class FuncionarioLoginForm extends JFrame {
                 Funcionario funcLogado = aux.autenticacao(email, senha);
 
                 if (funcLogado.getId() != 0) {
-                    JOptionPane.showMessageDialog(null, "Login bem-sucedido!");
                     c.setVisible(false);
                     dispose();
                     FuncionarioMenuForm telaFuncLogado = new FuncionarioMenuForm(funcLogado);
