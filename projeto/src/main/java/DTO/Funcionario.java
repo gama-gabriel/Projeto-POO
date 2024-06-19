@@ -1,8 +1,11 @@
 package DTO;
 
+import DAO.FuncionarioDAO;
+
 public class Funcionario extends Pessoa {
     private int id;
     private String cargo;
+    private FuncionarioDAO dao;
 
     public Funcionario() {
     }
@@ -35,5 +38,12 @@ public class Funcionario extends Pessoa {
     void listarResultados() {}
 
     void atualizarRegistros() {}
-
+    public void UseService(){
+        this.dao = new FuncionarioDAO();
+    }
+    public Funcionario autenticacao(String email, String senha){
+        UseService();
+        Funcionario funcLogado = dao.login(email, senha);
+        return funcLogado;
+    }
 }
