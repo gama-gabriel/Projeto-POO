@@ -42,10 +42,9 @@ public class MenuForm extends javax.swing.JFrame {
 
         ClassLoader cldr = this.getClass().getClassLoader();
         java.net.URL pacienteImageURL = cldr.getResource("forms/utils/paciente.png");
-        pacienteImg = new JLabel(new ImageIcon("forms/utils/paciente.png"));
+        pacienteImg = new JLabel(new ImageIcon(pacienteImageURL));
         pacienteImg.setLocation(175, 25);
 
-        asdsdsxas
         pacienteImg.setSize(200, 100);
         p2.add(pacienteImg);
 
@@ -99,12 +98,12 @@ public class MenuForm extends javax.swing.JFrame {
 
         c.add(p2);
 
-        funcBtn.addActionListener(new ActionListener() {
+        pacienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 c.setVisible(false);
                 dispose();
-                PacienteForm telaPaciente = new PacienteForm();
+                PacienteLogin telaPaciente = new PacienteLogin();
             }
         });
 
