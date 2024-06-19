@@ -14,10 +14,10 @@ public class PacienteDAO {
     public PacienteDAO(){
         try{
             String sql = "create table if not exists paciente(" +
-                    "    id int primary key auto_increment," +
-                    "    cpf varchar(11) unique," +
+                    "    id int primary key," +
+                    "    cpf varchar(11)," +
                     "    nome varchar(60)," +
-                    "    email varchar(50) unique," +
+                    "    email varchar(50)," +
                     "    data_nasc date," +
                     "    ativo bool," +
                     "    senha varchar(50)" +
@@ -39,15 +39,16 @@ public class PacienteDAO {
         try{
             if(conexao.conectar()){
                 String sql = "insert into paciente" +
-                        "    (cpf, nome, email, data_nasc, ativo, senha)" +
-                        "    values (?,?,?,?,?,?);";
+                        "    (id, cpf, nome, email, data_nasc, ativo, senha)" +
+                        "    values (?,?,?,?,?,?,?);";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
-                stmt.setString(1, obj.getCpf());
-                stmt.setString(2, obj.getNome());
-                stmt.setString(3, obj.getEmail());
-                stmt.setDate(4, new java.sql.Date(obj.getDataNascimento().getTime()));
-                stmt.setBoolean(5, obj.getAtivo());
-                stmt.setString(6, obj.getSenha());
+                stmt.setInt(1,obj.getId());
+                stmt.setString(2, obj.getCpf());
+                stmt.setString(3, obj.getNome());
+                stmt.setString(4, obj.getEmail());
+                stmt.setDate(5, new java.sql.Date(obj.getDataNascimento().getTime()));
+                stmt.setBoolean(6, obj.getAtivo());
+                stmt.setString(7, obj.getSenha());
                 cont = stmt.executeUpdate();
             }
         }
@@ -131,4 +132,33 @@ public class PacienteDAO {
             return obj;
         }
     }
+    public Paciente login(String email, String senha){
+        Paciente obj = new Paciente();
+        try{
+            if(conexao.conectar()){
+                String sql = "select * from paciente where email = ? and senha = ?";
+                PreparedStatement stmt = conexao.preparedStatement(sql);
+                stmt.setString(1, email);
+                stmt.setString(2, senha);
+                ResultSet resultado = stmt.executeQuery();
+                if( !resultado.isClosed()) {
+                    obj.setId(resultado.getInt("id"));
+                    obj.setCpf(resultado.getString("cpf"));
+                    obj.setNome(resultado.getString("nome"));
+                    obj.setEmail(resultado.getString("email"));
+                    java.sql.Date sqlDate = resultado.getDate("data_nasc");
+                    obj.setDataNascimento(new Date(sqlDate.getTime()));
+                    obj.setAtivo(resultado.getBoolean("ativo"));
+                    obj.setSenha(resultado.getString("senha"));
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return obj;
+        }
+    };
 }
