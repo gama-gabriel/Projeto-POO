@@ -14,6 +14,7 @@ public class PacienteDAO {
     public PacienteDAO(){
         try{
             String sql = "create table if not exists paciente(" +
+
                     "    id int primary key," +
                     "    cpf varchar(11)," +
                     "    nome varchar(60)," +
@@ -42,6 +43,7 @@ public class PacienteDAO {
                         "    (id, cpf, nome, email, data_nasc, ativo, senha)" +
                         "    values (?,?,?,?,?,?,?);";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
+
                 stmt.setInt(1,obj.getId());
                 stmt.setString(2, obj.getCpf());
                 stmt.setString(3, obj.getNome());
@@ -49,6 +51,7 @@ public class PacienteDAO {
                 stmt.setDate(5, new java.sql.Date(obj.getDataNascimento().getTime()));
                 stmt.setBoolean(6, obj.getAtivo());
                 stmt.setString(7, obj.getSenha());
+
                 cont = stmt.executeUpdate();
             }
         }

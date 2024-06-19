@@ -16,7 +16,7 @@ public class MenuForm extends javax.swing.JFrame {
 
 
     public MenuForm() {
-        setTitle("Login");
+        setTitle("Menu");
         setSize(900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -29,7 +29,7 @@ public class MenuForm extends javax.swing.JFrame {
         p1.setBackground(new Color(255, 255, 232));
         p1.setSize(900, 125);
         p1.setLocation(0, 0);
-        JLabel title = new JLabel("Tela de login");
+        JLabel title = new JLabel("Menu principal");
         title.setFont(new Font("Inter", Font.BOLD, 30));
         title.setForeground(new Color(43, 37, 93, 255));
         p1.add(title);
@@ -93,11 +93,18 @@ public class MenuForm extends javax.swing.JFrame {
         funcBtn.setFocusPainted(false);
         funcBtn.setFont(new Font("Inter", Font.BOLD, 16));
         funcBtn.setSize(250, 45);
+        funcBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.setVisible(false);
+                dispose();
+                FuncionarioLoginForm telaLoginFunc = new FuncionarioLoginForm();
+            }
+        });
         funcBtn.setLocation(500, 120);
         p2.add(funcBtn);
 
         c.add(p2);
-
         pacienteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,6 +113,7 @@ public class MenuForm extends javax.swing.JFrame {
                 PacienteLogin telaPaciente = new PacienteLogin();
             }
         });
+
 
         setVisible(true);
     }
