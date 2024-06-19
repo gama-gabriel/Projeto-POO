@@ -1,7 +1,11 @@
 package DTO;
 
+import DAO.PacienteDAO;
+
 public class Paciente extends Pessoa {
     private int id;
+
+    private PacienteDAO dao;
 
     public Paciente() {
     }
@@ -18,8 +22,20 @@ public class Paciente extends Pessoa {
         this.id = id;
     }
 
+    public void UseService(){
+        this.dao = new PacienteDAO();
+    }
+
+    public Paciente autenticacao(String email, String senha){
+        UseService();
+        Paciente PacLogado = dao.login(email, senha);
+        return PacLogado;
+    }
+
     void marcarConsulta() {}
 
     void cancelarConsulta() {}
+
+
 
 }

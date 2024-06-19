@@ -105,6 +105,14 @@ public class MenuForm extends javax.swing.JFrame {
         p2.add(funcBtn);
 
         c.add(p2);
+        pacienteBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.setVisible(false);
+                dispose();
+                PacienteLogin telaPaciente = new PacienteLogin();
+            }
+        });
 
 
         setVisible(true);
