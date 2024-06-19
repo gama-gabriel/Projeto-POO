@@ -1,17 +1,14 @@
 package Forms;
 
-<<<<<<< HEAD
 import DAO.FuncionarioDAO;
 import DTO.Funcionario;
 
 import java.util.Date;
-=======
 import DAO.PacienteDAO;
 import DTO.Paciente;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
->>>>>>> main
 
 public class Main {
     public static void main(String[] args) throws Exception {

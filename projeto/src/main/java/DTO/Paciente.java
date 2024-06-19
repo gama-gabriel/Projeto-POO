@@ -36,10 +36,6 @@ public class Paciente extends Pessoa {
 
     void cancelarConsulta() {}
 
-<<<<<<< HEAD
 
 
 }
-=======
-}
->>>>>>> 91d6fc24992f69e150166587789f4b30b5d2a034
