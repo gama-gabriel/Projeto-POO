@@ -1,5 +1,6 @@
-package Forms;
+package Forms.TableModels;
 
+import DAO.FuncionarioDAO;
 import DTO.Funcionario;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
 
 public class FuncionarioTableModel  extends AbstractTableModel {
     private List<Funcionario> dados = new ArrayList<Funcionario>();
-    private String[] colunas = {"codigo","email","nome","senha"};
+    private String[] colunas = {"id", "cpf", "nome", "email", "data de nascimento", "ativo", "cargo"};
     @Override
     public int getRowCount() {
         return getDados().size();
@@ -35,6 +36,7 @@ public class FuncionarioTableModel  extends AbstractTableModel {
     public String getColumnName(int coluna) {
         return getColunas()[coluna];
     }
+
     public List<Funcionario> getDados() {
         return dados;
     }
