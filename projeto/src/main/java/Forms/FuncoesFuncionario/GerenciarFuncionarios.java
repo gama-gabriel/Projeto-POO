@@ -44,7 +44,7 @@ public class GerenciarFuncionarios extends JFrame {    private Container c;
         dao = new FuncionarioDAO();
         modeloTabela.setDados(dao.retornaLista(""));
 
-        setTitle("Gerenciamento de pacientes");
+        setTitle("Gerenciamento de funcionários");
         setSize(1000, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -57,7 +57,7 @@ public class GerenciarFuncionarios extends JFrame {    private Container c;
         p1.setBackground(new Color(255, 255, 232));
         p1.setSize(1000, 125);
         p1.setLocation(0, 0);
-        JLabel title = new JLabel("Gerenciamento de pacientes", SwingConstants.CENTER);
+        JLabel title = new JLabel("Gerenciamento de funcionários", SwingConstants.CENTER);
         title.setLocation(300, 40);
         title.setSize(400, 40);
         title.setFont(new Font("Inter", Font.BOLD, 22));
@@ -156,7 +156,7 @@ public class GerenciarFuncionarios extends JFrame {    private Container c;
         });
         p2.add(opcaoPesquisar);
 
-        opcaoAlterar = new JButton("Alterar registros");
+        opcaoAlterar = new JButton("Alterar registro");
         opcaoAlterar.setFont(new Font("Inter", Font.BOLD, 16));
         opcaoAlterar.setBounds(375, 0, 250, 40);
         opcaoAlterar.setContentAreaFilled(false);
@@ -195,7 +195,7 @@ public class GerenciarFuncionarios extends JFrame {    private Container c;
         });
         p2.add(opcaoAlterar);
 
-        opcaoDeletar = new JButton("Excluir registros");
+        opcaoDeletar = new JButton("Excluir registro");
         opcaoDeletar.setFont(new Font("Inter", Font.BOLD, 16));
         opcaoDeletar.setBounds(700, 0, 250, 40);
         opcaoDeletar.setContentAreaFilled(false);

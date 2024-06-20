@@ -42,6 +42,8 @@ public class FuncionarioAlterar extends FuncionarioCadastro{
        if (logado.getId() != alterado.getId()) {
            senhaField.setVisible(false);
            confirmarSenhaField.setVisible(false);
+           senhaLabel.setVisible(false);
+           confirmarSenhaLabel.setVisible(false);
        }
        cargoField.setText(alterado.getCargo());
        cpfField.setText(alterado.getCpf());

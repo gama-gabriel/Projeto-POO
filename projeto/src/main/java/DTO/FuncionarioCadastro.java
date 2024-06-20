@@ -26,6 +26,8 @@ public class FuncionarioCadastro extends JFrame {
     public JPasswordField senhaField;
     public JPasswordField confirmarSenhaField;
     public JButton cadastrarButton;
+    public JLabel senhaLabel;
+    public JLabel confirmarSenhaLabel;
     public JPanel p2;
 
     public FuncionarioCadastro() {
@@ -103,7 +105,7 @@ public class FuncionarioCadastro extends JFrame {
         cargoField.setBounds(394, 200, 250, 30);
         p2.add(cargoField);
 
-        JLabel senhaLabel = new JLabel("Senha:");
+        senhaLabel = new JLabel("Senha:");
         senhaLabel.setFont(new Font("Inter", Font.PLAIN, 16));
         senhaLabel.setBounds(244, 250, 100, 30);
         p2.add(senhaLabel);
@@ -113,7 +115,7 @@ public class FuncionarioCadastro extends JFrame {
         senhaField.setBounds(394, 250, 250, 30);
         p2.add(senhaField);
 
-        JLabel confirmarSenhaLabel = new JLabel("Confirmar Senha:");
+        confirmarSenhaLabel = new JLabel("Confirmar Senha:");
         confirmarSenhaLabel.setFont(new Font("Inter", Font.PLAIN, 16));
         confirmarSenhaLabel.setBounds(244, 300, 150, 30);
         p2.add(confirmarSenhaLabel);

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class FuncionarioTableModel  extends AbstractTableModel {
+public class FuncionarioTableModel extends AbstractTableModel {
     private List<Funcionario> dados = new ArrayList<Funcionario>();
     private String[] colunas = {"id", "cpf", "nome", "email", "data de nascimento", "ativo", "cargo"};
     @Override
