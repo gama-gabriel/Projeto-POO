@@ -1,6 +1,5 @@
 package Forms;
 
-import DAO.PacienteDAO;
 import DTO.Paciente;
 import DTO.PacienteCadastro;
 
@@ -9,10 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PacienteLogin extends JFrame {
+public class PacienteLoginForm extends JFrame {
     private Container c;
 
-    public PacienteLogin() {
+    public PacienteLoginForm() {
         setTitle("Paciente");
         setSize(900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -79,7 +78,10 @@ public class PacienteLogin extends JFrame {
                 Paciente PacLogado = aux.autenticacao(email, senha);
 
                 if (PacLogado.getId() != 0) {
-                    JOptionPane.showMessageDialog(null, "Login bem-sucedido!");
+                    JOptionPane.showMessageDialog(null, "Login bem-sucedido! \n Seja bem vindo " + PacLogado.getNome() + "!");
+                    c.setVisible(false);
+                    dispose();
+                    PacienteMenuForm telaPaciente = new PacienteMenuForm(PacLogado);
                 } else {
                     JOptionPane.showMessageDialog(null, "Email ou senha incorretos.");
                 }
@@ -99,6 +101,6 @@ public class PacienteLogin extends JFrame {
     }
 
     public static void main(String[] args) {
-        new PacienteLogin();
+        new PacienteLoginForm();
     }
 }

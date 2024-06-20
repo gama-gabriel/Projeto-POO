@@ -110,7 +110,7 @@ public class MenuForm extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 c.setVisible(false);
                 dispose();
-                PacienteLogin telaPaciente = new PacienteLogin();
+                PacienteLoginForm telaPaciente = new PacienteLoginForm();
             }
         });
 

@@ -1,6 +1,9 @@
 package DTO;
 
 import DAO.PacienteDAO;
+import Forms.FuncionarioMenuForm;
+import Forms.PacienteMenuForm;
+import Forms.utils.RoundedBorder;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -20,6 +23,7 @@ public class PacienteCadastro extends JFrame {
     private JPasswordField senhaField;
     private JPasswordField confirmarSenhaField;
     private JButton cadastrarButton;
+    private JButton voltarButton;
 
     public PacienteCadastro() {
         setTitle("Cadastro de Usuário");
@@ -110,7 +114,7 @@ public class PacienteCadastro extends JFrame {
         cadastrarButton.setFont(new Font("Inter", Font.BOLD, 16));
         cadastrarButton.setBounds(300, 350, 300, 30);
         p2.add(cadastrarButton);
-
+        
         cadastrarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -131,11 +135,16 @@ public class PacienteCadastro extends JFrame {
                     novoUsuario.UseService();
                     novoUsuario.dao.inserir(novoUsuario);
                     JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+                    c.setVisible(false);
+                    dispose();
+                    PacienteMenuForm telaPaciente = new PacienteMenuForm(novoUsuario);
                 }
             }
         });
 
         c.add(p2);
+
+
 
         setVisible(true);
         // System.out.println(title.getX() - cpfLabel.getX());
