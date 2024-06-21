@@ -1,26 +1,14 @@
 package Forms.FuncoesFuncionario;
-import DAO.FuncionarioDAO;
 import DAO.ExameDAO;
-import DTO.Funcionario;
-import DTO.FuncionarioAlterar;
-import DTO.Exame;
-import DTO.ExameAlterar;
-import Forms.FuncoesFuncionario.GerenciarExames;
-import Forms.TableModels.FuncionarioTableModel;
+import DTO.*;
 import Forms.TableModels.ExameTableModel;
 import Forms.utils.RoundedBorder;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
 import javax.swing.text.MaskFormatter;
 import java.awt.event.*;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class GerenciarExames extends JFrame {
     private Container c;
@@ -30,6 +18,7 @@ public class GerenciarExames extends JFrame {
     private ExameTableModel modeloTabela;
     private JLabel funcLogado;
     private JButton opcaoPesquisar;
+    private JButton opcaoCriar;
     private JButton opcaoAlterar;
     private JButton opcaoDeletar;
     private JTextField pesquisaTexto;
@@ -86,7 +75,6 @@ public class GerenciarExames extends JFrame {
         funcLogado.setVisible(true);
         p1.add(funcLogado);
 
-
         c.add(p1);
 
         JPanel p2 = new JPanel(null);
@@ -140,35 +128,35 @@ public void mouseExited(java.awt.event.MouseEvent evt) {
         });
         p2.add(opcaoPesquisar);
 
-        opcaoPesquisar = new JButton("Pesquisar registros");
-        opcaoPesquisar.setFont(new Font("Inter", Font.BOLD, 16));
-        opcaoPesquisar.setBounds(283, 0, 200, 40);
-        opcaoPesquisar.setContentAreaFilled(false);
-        opcaoPesquisar.setFocusPainted(false);
-        opcaoPesquisar.setFont(new Font("Inter", Font.BOLD, 16));
-        opcaoPesquisar.setForeground(new Color(255, 255, 232));
-        opcaoPesquisar.setBorder(new RoundedBorder(10, 3));
-        opcaoPesquisar.setForeground(new Color(43, 37, 93, 191));
-        opcaoPesquisar.setOpaque(false);
-        opcaoPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
+        opcaoCriar = new JButton("Criar novo registro");
+        opcaoCriar.setFont(new Font("Inter", Font.BOLD, 16));
+        opcaoCriar.setBounds(283, 0, 200, 40);
+        opcaoCriar.setContentAreaFilled(false);
+        opcaoCriar.setFocusPainted(false);
+        opcaoCriar.setFont(new Font("Inter", Font.BOLD, 16));
+        opcaoCriar.setForeground(new Color(255, 255, 232));
+        opcaoCriar.setBorder(new RoundedBorder(10, 3));
+        opcaoCriar.setForeground(new Color(43, 37, 93, 191));
+        opcaoCriar.setOpaque(false);
+        opcaoCriar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                opcaoPesquisar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                opcaoPesquisar.setForeground(new Color(43, 37, 93, 255));
+                opcaoCriar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                opcaoCriar.setForeground(new Color(43, 37, 93, 255));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                opcaoPesquisar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                opcaoPesquisar.setForeground(new Color(43, 37, 93, 191));
+                opcaoCriar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                opcaoCriar.setForeground(new Color(43, 37, 93, 191));
             }
         });
-        opcaoPesquisar.addActionListener(new ActionListener() {
+        opcaoCriar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                tabela.clearSelection();
-                viewportTabela.setVisible(false);
-                filtrosPesquisa.setVisible(true);
+                c.setVisible(false);
+                dispose();
+                ExameCadastro telaCadastroExame = new ExameCadastro(logado);
             }
         });
-        p2.add(opcaoPesquisar);
+        p2.add(opcaoCriar);
 
         opcaoAlterar = new JButton("Alterar registro");
         opcaoAlterar.setFont(new Font("Inter", Font.BOLD, 16));

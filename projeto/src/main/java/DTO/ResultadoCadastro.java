@@ -1,5 +1,6 @@
 package DTO;
 import Forms.FuncoesFuncionario.GerenciarExames;
+import Forms.FuncoesFuncionario.GerenciarResultados;
 import Forms.utils.RoundedBorder;
 
 import javax.swing.*;
@@ -7,17 +8,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ExameCadastro extends JFrame {
+public class ResultadoCadastro extends JFrame {
     public Container c;
     public JLabel title;
-    public JTextField nomeField;
     public JTextField descricaoField;
-    public JTextField preparoField;
-    public JTextField instrucoesField;
     public JButton cadastrarButton;
     public JPanel p2;
-    public ExameCadastro(Funcionario logado) {
-        setTitle("Cadastro de Exame");
+    public ResultadoCadastro(Funcionario logado) {
+        setTitle("Cadastro de Resultado");
         setSize(900, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -30,7 +28,7 @@ public class ExameCadastro extends JFrame {
         p1.setBackground(new Color(255, 255, 232));
         p1.setSize(900, 125);
         p1.setLocation(0, 0);
-        title = new JLabel("Cadastro de Exames");
+        title = new JLabel("Cadastro de Resultados");
         title.setFont(new Font("Inter", Font.BOLD, 30));
         title.setForeground(new Color(43, 37, 93, 255));
         p1.add(title);
@@ -41,48 +39,18 @@ public class ExameCadastro extends JFrame {
         p2.setSize(900, 450);
         p2.setLocation(0, 125);
 
-        JLabel nomeLabel = new JLabel("Nome:");
-        nomeLabel.setFont(new Font("Inter", Font.PLAIN, 16));
-        nomeLabel.setBounds(244, 50, 100, 30);
-        p2.add(nomeLabel);
-
-        nomeField = new JTextField();
-        nomeField.setFont(new Font("Inter", Font.PLAIN, 16));
-        nomeField.setBounds(344, 50, 300, 30);
-        p2.add(nomeField);
-
         JLabel descricaoLabel = new JLabel("Descrição:");
         descricaoLabel.setFont(new Font("Inter", Font.PLAIN, 16));
-        descricaoLabel.setBounds(244, 100, 100, 30);
+        descricaoLabel.setBounds(244, 60, 100, 30);
         p2.add(descricaoLabel);
 
         descricaoField = new JTextField();
         descricaoField.setFont(new Font("Inter", Font.PLAIN, 16));
-        descricaoField.setBounds(344, 100, 300, 50);
+        descricaoField.setBounds(344, 50, 300, 50);
         p2.add(descricaoField);
 
-        JLabel preparoLabel = new JLabel("Preparo:");
-        preparoLabel.setFont(new Font("Inter", Font.PLAIN, 16));
-        preparoLabel.setBounds(244, 170, 100, 30);
-        p2.add(preparoLabel);
-
-        preparoField = new JTextField();
-        preparoField.setFont(new Font("Inter", Font.PLAIN, 16));
-        preparoField.setBounds(344, 170, 300, 50);
-        p2.add(preparoField);
-
-        JLabel instrucoesLabel = new JLabel("Instruções:");
-        instrucoesLabel.setFont(new Font("Inter", Font.PLAIN, 16));
-        instrucoesLabel.setBounds(244, 240, 100, 30);
-        p2.add(instrucoesLabel);
-
-        instrucoesField = new JTextField();
-        instrucoesField.setFont(new Font("Inter", Font.PLAIN, 16));
-        instrucoesField.setBounds(344, 240, 300, 50);
-        p2.add(instrucoesField);
-
         cadastrarButton = new JButton("Cadastrar");
-        cadastrarButton.setBounds(375, 310, 150, 40);
+        cadastrarButton.setBounds(375, 120, 150, 40);
         cadastrarButton.setContentAreaFilled(false);
         cadastrarButton.setFocusPainted(false);
         cadastrarButton.setFont(new Font("Inter", Font.BOLD, 16));
@@ -107,18 +75,14 @@ public class ExameCadastro extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (validarCampos()) {
-                    Exame novoExame = new Exame();
-                    novoExame.setNome(nomeField.getText());
-                    novoExame.setDisponivel(true);
-                    novoExame.setDescricao(descricaoField.getText());
-                    novoExame.setPreparo(preparoField.getText());
-                    novoExame.setInstrucoesPos(instrucoesField.getText());
-                    novoExame.UseService();
-                    novoExame.dao.inserir(novoExame);
+                    Resultado novoResultado = new Resultado();
+                    novoResultado.setDescricao(descricaoField.getText());
+                    novoResultado.UseService();
+                    novoResultado.dao.inserir(novoResultado);
                     JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
                     c.setVisible(false);
                     dispose();
-                    GerenciarExames telaGerenciarExames = new GerenciarExames(logado);
+                    GerenciarResultados telaGerenciarResultados = new GerenciarResultados(logado);
                 }
             }
         });
@@ -129,11 +93,8 @@ public class ExameCadastro extends JFrame {
 
     public boolean validarCampos() {
         String descricao = descricaoField.getText();
-        String preparo = preparoField.getText();
-        String nome = nomeField.getText();
-        String instrucoes = instrucoesField.getText();
 
-        if (descricao.isEmpty() || preparo.isEmpty() || nome.isEmpty() || instrucoes.isEmpty()) {
+        if (descricao.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Todos os campos devem ser preenchidos", "Erro", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -142,6 +103,6 @@ public class ExameCadastro extends JFrame {
     }
 
     public static void main(String[] args) {
-        new ExameCadastro(new Funcionario());
+        new ResultadoCadastro(new Funcionario());
     }
 }

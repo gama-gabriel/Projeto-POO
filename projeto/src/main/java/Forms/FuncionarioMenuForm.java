@@ -3,6 +3,7 @@ import DTO.Funcionario;
 import Forms.FuncoesFuncionario.GerenciarExames;
 import Forms.FuncoesFuncionario.GerenciarFuncionarios;
 import Forms.FuncoesFuncionario.GerenciarPacientes;
+import Forms.FuncoesFuncionario.GerenciarResultados;
 import Forms.utils.RoundedBorder;
 import java.awt.*;
 import javax.swing.*;
@@ -134,8 +135,6 @@ public class FuncionarioMenuForm extends JFrame {
         gerenciarExames.setContentAreaFilled(false);
         gerenciarExames.setFocusPainted(false);
         gerenciarExames.setFont(new Font("Inter", Font.BOLD, 16));
-//        gerenciarExames.setHorizontalAlignment(SwingConstants.CENTER);
-//        gerenciarExames.setVerticalAlignment(SwingConstants.CENTER);
         gerenciarExames.setForeground(new Color(255, 255, 232));
         gerenciarExames.setBorder(new RoundedBorder(10, 3));
         gerenciarExames.setForeground(new Color(43, 37, 93, 191));
@@ -185,6 +184,15 @@ public class FuncionarioMenuForm extends JFrame {
                 gerenciarResultados.setForeground(new Color(43, 37, 93, 191));
             }
         });
+        gerenciarResultados.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.setVisible(false);
+                dispose();
+                GerenciarResultados telaGerenciarResultados = new GerenciarResultados(logado);
+            }
+        });
+
         p2.add(gerenciarResultados);
 
         c.add(p2);

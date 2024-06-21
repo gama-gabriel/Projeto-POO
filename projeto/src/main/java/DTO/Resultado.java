@@ -1,8 +1,23 @@
 package DTO;
 
+import DAO.ExameDAO;
+import DAO.ResultadoDAO;
+
 public class Resultado {
     private int id;
     private String descricao;
+    public ResultadoDAO dao;
+    public void UseService(){
+        this.dao = new ResultadoDAO();
+    }
+
+    public ResultadoDAO getDao() {
+        return dao;
+    }
+
+    public void setDao(ResultadoDAO dao) {
+        this.dao = dao;
+    }
 
     public Resultado() {
     }
