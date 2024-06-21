@@ -32,7 +32,7 @@ public class GerenciarPacientes extends JFrame {
     private JButton opcaoPesquisar;
     private JButton opcaoAlterar;
     private JButton opcaoDeletar;
-    private JTextArea pesquisaTexto;
+    private JTextField pesquisaTexto;
     private JFormattedTextField pesquisaData;
     private PacienteDAO dao;
     private MaskFormatter createFormatter(String s) {
@@ -232,11 +232,6 @@ public void mouseExited(java.awt.event.MouseEvent evt) {
                 int id = (int) tabela.getValueAt(row, 0);
                 int dialogButton = JOptionPane.showConfirmDialog (null, String.format("Tem certeza que quer excluir o paciente de id %d?", id),"Confirmação",JOptionPane.YES_NO_OPTION);
                 if(dialogButton == JOptionPane.YES_OPTION) {
-                    if (row == logado.getId()) {
-                        JOptionPane.showMessageDialog(null, "Você não pode excluir o prórpio registro", "Erro", JOptionPane.ERROR_MESSAGE);
-                        remove(dialogButton);
-                        return;
-                    }
                     viewportTabela.setVisible(false);
                     tabela.clearSelection();
                     dao.remover(id);
@@ -322,10 +317,9 @@ public void mouseExited(java.awt.event.MouseEvent evt) {
         pesquisaLabel.setFont(new Font("Inter", Font.BOLD, 16));
         filtrosPesquisa.add(pesquisaLabel);
 
-        pesquisaTexto = new JTextArea();
+        pesquisaTexto = new JTextField();
         pesquisaTexto.setBounds(425, 200, 150, 25);
         pesquisaTexto.setFont(new Font("Inter", Font.PLAIN, 16));
-        pesquisaTexto.setBorder(new RoundedBorder(1, 1));
         filtrosPesquisa.add(pesquisaTexto);
 
         pesquisaData = new JFormattedTextField(createFormatter("##/##/####"));

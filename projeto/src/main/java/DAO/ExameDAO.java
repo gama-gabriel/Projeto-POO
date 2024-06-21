@@ -1,11 +1,14 @@
 package DAO;
 
 import DTO.Exame;
+import DTO.Funcionario;
 
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExameDAO {
     private ConexaoSQLite conexao = new ConexaoSQLite();
@@ -13,9 +16,9 @@ public class ExameDAO {
     public ExameDAO(){
         try{
             String sql = "create table if not exists exames(" +
-                    "    id int primary key auto_increment," +
+                    "    id integer primary key autoincrement," +
                     "    nome varchar(30)," +
-                    "    disponivell bool," +
+                    "    disponivel bool," +
                     "    descricao varchar(250)," +
                     "    preparo varchar(250)," +
                     "    instrucoes varchar(250)" +
@@ -32,16 +35,17 @@ public class ExameDAO {
             conexao.desconectar();
         }
     }
+
     public int inserir(Exame obj){
         int cont = 0;
         try{
             if(conexao.conectar()){
                 String sql = "insert into exames" +
-                        "    (nome, disponivell, descricao, preparo, instrucoes)" +
+                        "    (nome, disponivel, descricao, preparo, instrucoes)" +
                         "    values (?,?,?,?,?);";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
                 stmt.setString(1, obj.getNome());
-                stmt.setBoolean(2, obj.isDisponivel());
+                stmt.setBoolean(2, obj.getDisponivel());
                 stmt.setString(3, obj.getDescricao());
                 stmt.setString(4, obj.getPreparo());
                 stmt.setString(5, obj.getInstrucoesPos());
@@ -56,16 +60,17 @@ public class ExameDAO {
             return cont;
         }
     }
+
     public int alterar(Exame obj){
         int cont = 0;
         try{
             if(conexao.conectar()){
                 String sql = "update exames" +
-                        "    set nome = ?, disponivell = ?, descricao = ?, preparo = ?, instrucoes = ?)" +
+                        "    set nome = ?, disponivel = ?, descricao = ?, preparo = ?, instrucoes = ?" +
                         "    where id = ?";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
                 stmt.setString(1, obj.getNome());
-                stmt.setBoolean(2, obj.isDisponivel());
+                stmt.setBoolean(2, obj.getDisponivel());
                 stmt.setString(3, obj.getDescricao());
                 stmt.setString(4, obj.getPreparo());
                 stmt.setString(5, obj.getInstrucoesPos());
@@ -81,13 +86,14 @@ public class ExameDAO {
             return cont;
         }
     }
-    public int remover(Exame obj){
+
+    public int remover(int id){
         int cont = 0;
         try{
             if(conexao.conectar()){
                 String sql = "delete from exames where id=?";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
-                stmt.setInt(1, obj.getId());
+                stmt.setInt(1,id);
                 cont = stmt.executeUpdate();
             }
         }
@@ -99,6 +105,7 @@ public class ExameDAO {
             return cont;
         }
     }
+
     public Exame pesquisar(int codigo){
         Exame obj = new Exame();
         try{
@@ -110,7 +117,7 @@ public class ExameDAO {
                 if(! resultado.isClosed()){
                     obj.setId(resultado.getInt("id"));
                     obj.setNome(resultado.getString("nome"));
-                    obj.setDisponivel(resultado.getBoolean("disponivell"));
+                    obj.setDisponivel(resultado.getBoolean("disponivel"));
                     obj.setDescricao(resultado.getString("descricao"));
                     obj.setPreparo(resultado.getString("preparo"));
                     obj.setInstrucoesPos(resultado.getString("instrucoes"));
@@ -123,6 +130,116 @@ public class ExameDAO {
         finally{
             conexao.desconectar();
             return obj;
+        }
+    }
+
+    public List<Exame> retornaLista(String busca){
+        List<Exame> lista = new ArrayList<Exame>();
+        try{
+            if(conexao.conectar()){
+                PreparedStatement stmt;
+                if(busca.length() > 0){
+                    stmt = conexao.preparedStatement("select *  from exames "
+                            + "where nome like ? order by nome");
+                    stmt.setString(1, "%"+ busca + "%");
+                } else {
+                    stmt = conexao.preparedStatement("select *  from exames "
+                            + "order by nome");
+                }
+                ResultSet resultado = stmt.executeQuery();
+                while(resultado.next()){
+                    Exame obj = new Exame();
+                    obj.setId(resultado.getInt("id"));
+                    obj.setNome(resultado.getString("nome"));
+                    obj.setDisponivel(resultado.getBoolean("disponivel"));
+                    obj.setDescricao(resultado.getString("descricao"));
+                    obj.setPreparo(resultado.getString("preparo"));
+                    obj.setInstrucoesPos(resultado.getString("instrucoes"));
+                    lista.add(obj);
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return lista;
+        }
+    }
+
+    public List<Exame> pesquisaDsponivel(String busca){
+        List<Exame> lista = new ArrayList<Exame>();
+        boolean disponivel = Boolean.parseBoolean(busca);
+        try{
+            if(conexao.conectar()){
+                PreparedStatement stmt;
+                stmt = conexao.preparedStatement("select *  from exames "
+                        + "where disponivel = ?");
+                stmt.setBoolean(1, disponivel);
+                ResultSet resultado = stmt.executeQuery();
+                while(resultado.next()){
+                    Exame obj = new Exame();
+                    obj.setId(resultado.getInt("id"));
+                    obj.setNome(resultado.getString("nome"));
+                    obj.setDisponivel(resultado.getBoolean("disponivel"));
+                    obj.setDescricao(resultado.getString("descricao"));
+                    obj.setPreparo(resultado.getString("preparo"));
+                    obj.setInstrucoesPos(resultado.getString("instrucoes"));
+                    lista.add(obj);
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return lista;
+        }
+    }
+
+    public List<Exame> pesquisaColuna(String busca, String coluna){
+        List<Exame> lista = new ArrayList<Exame>();
+        if (coluna == "id") {
+            Exame exame = pesquisar(Integer.parseInt(busca));
+            lista.add(exame);
+            return lista;
+        }
+        try{
+            if(conexao.conectar()){
+                PreparedStatement stmt;
+                stmt = conexao.preparedStatement("select *  from exames "
+                        + "where " + coluna + " like ?");
+                stmt.setString(1, "%" + busca + "%");
+                ResultSet resultado = stmt.executeQuery();
+                while(resultado.next()){
+                    Exame obj = new Exame();
+                    obj.setId(resultado.getInt("id"));
+                    obj.setNome(resultado.getString("nome"));
+                    obj.setDisponivel(resultado.getBoolean("disponivel"));
+                    obj.setDescricao(resultado.getString("descricao"));
+                    obj.setPreparo(resultado.getString("preparo"));
+                    obj.setInstrucoesPos(resultado.getString("instrucoes"));
+                    lista.add(obj);
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return lista;
         }
     }
 }

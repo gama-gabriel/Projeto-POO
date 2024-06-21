@@ -1,5 +1,6 @@
 package Forms;
 import DTO.Funcionario;
+import Forms.FuncoesFuncionario.GerenciarExames;
 import Forms.FuncoesFuncionario.GerenciarFuncionarios;
 import Forms.FuncoesFuncionario.GerenciarPacientes;
 import Forms.utils.RoundedBorder;
@@ -150,6 +151,15 @@ public class FuncionarioMenuForm extends JFrame {
                 gerenciarExames.setForeground(new Color(43, 37, 93, 191));
             }
         });
+        gerenciarExames.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.setVisible(false);
+                dispose();
+                GerenciarExames telaGerenciarExames = new GerenciarExames(logado);
+            }
+        });
+
         p2.add(gerenciarExames);
 
         gerenciarResultados = new JButton("<html><div style='text-align: center;'>Gerenciar<br>resultados</div></html>");

@@ -1,5 +1,8 @@
 package DTO;
 
+import DAO.ExameDAO;
+import DAO.PacienteDAO;
+
 public class Exame {
     private int id;
     private String nome;
@@ -7,8 +10,12 @@ public class Exame {
     private String descricao;
     private String preparo;
     private String instrucoesPos;
+    public ExameDAO dao;
 
     public Exame() {
+    }
+    public void UseService(){
+        this.dao = new ExameDAO();
     }
 
     public Exame(int id, String nome, boolean disponivel, String descricao, String preparo, String instrucoesPos) {
@@ -36,7 +43,7 @@ public class Exame {
         this.nome = nome;
     }
 
-    public boolean isDisponivel() {
+    public boolean getDisponivel() {
         return disponivel;
     }
 

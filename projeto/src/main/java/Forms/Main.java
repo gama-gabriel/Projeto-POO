@@ -1,6 +1,8 @@
 package Forms;
 
+import DAO.ExameDAO;
 import DAO.FuncionarioDAO;
+import DTO.Exame;
 import DTO.Funcionario;
 
 import java.util.Date;
@@ -24,6 +26,18 @@ public class Main {
 //        PacienteDAO p1DAO = new PacienteDAO();
 //        p1DAO.inserir(p1);
         MenuForm f = new MenuForm();
+//        ExameDAO edao = new ExameDAO();
+//        Exame e = new Exame();
+//        e.setNome("Raio-x");
+//        e.setDescricao("Exame de raio-x");
+//        e.setDisponivel(true);
+//        e.setPreparo("Não entrar com brincos");
+//        e.setInstrucoesPos("Sem instruções");
+//        if (edao.inserir(e) > 0) {
+//            System.out.println("exame inserido com sucesso");
+//        } else {
+//            System.out.println("erro");
+//        }
      //   FuncionarioDAO dao = new FuncionarioDAO();
      //   Funcionario x = new Funcionario();
 

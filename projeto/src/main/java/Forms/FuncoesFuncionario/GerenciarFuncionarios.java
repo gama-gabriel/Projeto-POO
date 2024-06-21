@@ -27,7 +27,7 @@ public class GerenciarFuncionarios extends JFrame {    private Container c;
     private JButton opcaoPesquisar;
     private JButton opcaoAlterar;
     private JButton opcaoDeletar;
-    private JTextArea pesquisaTexto;
+    private JTextField pesquisaTexto;
     private JFormattedTextField pesquisaData;
     private FuncionarioDAO dao;
     private MaskFormatter createFormatter(String s) {
@@ -317,10 +317,9 @@ public class GerenciarFuncionarios extends JFrame {    private Container c;
         pesquisaLabel.setFont(new Font("Inter", Font.BOLD, 16));
         filtrosPesquisa.add(pesquisaLabel);
 
-        pesquisaTexto = new JTextArea();
+        pesquisaTexto = new JTextField();
         pesquisaTexto.setBounds(425, 200, 150, 25);
         pesquisaTexto.setFont(new Font("Inter", Font.PLAIN, 16));
-        pesquisaTexto.setBorder(new RoundedBorder(1, 1));
         filtrosPesquisa.add(pesquisaTexto);
 
         pesquisaData = new JFormattedTextField(createFormatter("##/##/####"));

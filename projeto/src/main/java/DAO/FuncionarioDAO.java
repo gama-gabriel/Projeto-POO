@@ -140,6 +140,7 @@ public class FuncionarioDAO {
             return obj;
         }
     }
+
     public List<Funcionario> retornaLista(String busca){
         List<Funcionario> lista = new ArrayList<Funcionario>();
         try{
@@ -298,6 +299,7 @@ public class FuncionarioDAO {
             return lista;
         }
     }
+
     public boolean pesquisaCpf(String cpf){
         boolean encontrei = false;
         try{

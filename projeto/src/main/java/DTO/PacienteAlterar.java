@@ -44,8 +44,6 @@ public class PacienteAlterar extends PacienteCadastro{
         senhaLabel.setVisible(false);
         confirmarSenhaLabel.setVisible(false);
 
-        cpfField.setText(alterado.getCpf());
-
         alterarButton = new JButton("Alterar");
         alterarButton.setFont(new Font("Inter", Font.BOLD, 16));
         alterarButton.setBounds(385, 350, 130, 40);
@@ -92,7 +90,7 @@ public class PacienteAlterar extends PacienteCadastro{
                     JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso!");
                     c.setVisible(false);
                     dispose();
-                    GerenciarPacientes telaGenrenciarFunc = new GerenciarPacientes(logado);
+                    GerenciarPacientes telaGenrenciarPacientes = new GerenciarPacientes(logado);
                 }
             }
         });
