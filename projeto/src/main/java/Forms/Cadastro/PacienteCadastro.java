@@ -1,6 +1,7 @@
-package DTO;
+package Forms.Cadastro;
 
 import DAO.PacienteDAO;
+import DTO.Paciente;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;

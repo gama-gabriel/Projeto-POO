@@ -1,4 +1,6 @@
-package DTO;
+package Forms.Cadastro;
+import DTO.Exame;
+import DTO.Funcionario;
 import Forms.FuncoesFuncionario.GerenciarExames;
 import Forms.utils.RoundedBorder;
 

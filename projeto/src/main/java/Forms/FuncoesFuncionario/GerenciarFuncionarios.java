@@ -1,16 +1,12 @@
 package Forms.FuncoesFuncionario;
 import DAO.FuncionarioDAO;
 import DTO.Funcionario;
-import DTO.FuncionarioAlterar;
-import Forms.FuncoesFuncionario.GerenciarPacientes;
+import Forms.Alteracao.FuncionarioAlterar;
 import Forms.TableModels.FuncionarioTableModel;
 import Forms.utils.RoundedBorder;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
 import javax.swing.text.MaskFormatter;
 import java.awt.event.*;
 import java.text.DateFormat;

@@ -1,9 +1,8 @@
-package DTO;
+package Forms.Alteracao;
 
 import DAO.FuncionarioDAO;
-import DAO.PacienteDAO;
-import Forms.FuncionarioLoginForm;
-import Forms.FuncionarioMenuForm;
+import DTO.Funcionario;
+import Forms.Cadastro.FuncionarioCadastro;
 import Forms.FuncoesFuncionario.GerenciarFuncionarios;
 import Forms.utils.RoundedBorder;
 
@@ -15,7 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class FuncionarioAlterar extends FuncionarioCadastro{
+public class FuncionarioAlterar extends FuncionarioCadastro {
     public Funcionario getAlterado() {
         return alterado;
     }

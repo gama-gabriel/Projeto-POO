@@ -1,7 +1,9 @@
-package DTO;
+package Forms.Alteracao;
 
-import Forms.FuncoesFuncionario.GerenciarExames;
-import Forms.FuncoesFuncionario.GerenciarPacientes;
+import DTO.Funcionario;
+import DTO.Resultado;
+import Forms.FuncoesFuncionario.GerenciarResultados;
+import Forms.Cadastro.ResultadoCadastro;
 import Forms.utils.RoundedBorder;
 
 import javax.swing.*;
@@ -9,32 +11,27 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ExameAlterar extends ExameCadastro{
-    private Exame alterado;
+public class ResultadoAlterar extends ResultadoCadastro {
+    private Resultado alterado;
     private JButton alterarButton;
-
-    public Exame getAlterado() {
+    public Resultado getAlterado() {
         return alterado;
     }
 
-    public void setAlterado(Exame alterado) {
+    public void setAlterado(Resultado alterado) {
         this.alterado = alterado;
     }
-
-    public ExameAlterar(Funcionario logado, Exame alterado) {
+    public ResultadoAlterar(Funcionario logado, Resultado alterado) {
         super(logado);
         setAlterado(alterado);
-        setTitle("Alteração de cadastro de exames");
-        title.setText("Alteração de cadastro");
+        setTitle("Alteração de cadastro de resultados");
         cadastrarButton.setVisible(false);
 
-        nomeField.setText(alterado.getNome());
         descricaoField.setText(alterado.getDescricao());
-        preparoField.setText(alterado.getPreparo());
-        instrucoesField.setText(alterado.getInstrucoesPos());
+
 
         alterarButton = new JButton("Alterar");
-        alterarButton.setBounds(375, 310, 150, 40);
+        alterarButton.setBounds(375, 120, 150, 40);
         alterarButton.setContentAreaFilled(false);
         alterarButton.setFocusPainted(false);
         alterarButton.setFont(new Font("Inter", Font.BOLD, 16));
@@ -59,19 +56,15 @@ public class ExameAlterar extends ExameCadastro{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (validarCampos()) {
-                    Exame novoExame = new Exame();
+                    Resultado novoExame = new Resultado();
                     novoExame.setId(alterado.getId());
-                    novoExame.setNome(nomeField.getText());
-                    novoExame.setDisponivel(true);
                     novoExame.setDescricao(descricaoField.getText());
-                    novoExame.setPreparo(preparoField.getText());
-                    novoExame.setInstrucoesPos(instrucoesField.getText());
                     novoExame.UseService();
                     novoExame.dao.alterar(novoExame);
                     JOptionPane.showMessageDialog(null, "Cadastro alterado com sucesso!");
                     c.setVisible(false);
                     dispose();
-                    GerenciarExames telaGenrenciarExames = new GerenciarExames(logado);
+                    GerenciarResultados telaGenrenciarResultados = new GerenciarResultados(logado);
                 }
             }
         });
@@ -81,4 +74,3 @@ public class ExameAlterar extends ExameCadastro{
         setVisible(true);
     }
 }
-

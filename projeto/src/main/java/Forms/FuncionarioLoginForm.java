@@ -1,10 +1,9 @@
 package Forms;
 import DTO.Funcionario;
-import DTO.FuncionarioCadastro;
+import Forms.Cadastro.FuncionarioCadastro;
 import Forms.utils.RoundedBorder;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.*;
 

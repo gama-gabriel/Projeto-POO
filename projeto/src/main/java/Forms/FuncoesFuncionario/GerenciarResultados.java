@@ -1,6 +1,8 @@
 package Forms.FuncoesFuncionario;
 import DAO.ResultadoDAO;
 import DTO.*;
+import Forms.Alteracao.ResultadoAlterar;
+import Forms.Cadastro.ResultadoCadastro;
 import Forms.TableModels.ResultadoTableModel;
 import Forms.utils.RoundedBorder;
 import java.awt.*;

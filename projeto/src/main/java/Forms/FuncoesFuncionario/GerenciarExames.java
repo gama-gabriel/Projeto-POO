@@ -1,6 +1,8 @@
 package Forms.FuncoesFuncionario;
 import DAO.ExameDAO;
 import DTO.*;
+import Forms.Alteracao.ExameAlterar;
+import Forms.Cadastro.ExameCadastro;
 import Forms.TableModels.ExameTableModel;
 import Forms.utils.RoundedBorder;
 import java.awt.*;
