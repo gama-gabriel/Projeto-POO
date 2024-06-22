@@ -1,6 +1,7 @@
-package DTO;
+package Forms.Cadastro;
 
 import DAO.PacienteDAO;
+import DTO.Paciente;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -12,15 +13,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PacienteCadastro extends JFrame {
-    private Container c;
-    private JFormattedTextField cpfField;
-    private JTextField emailField;
-    private JTextField nomeField;
-    private JFormattedTextField dataNascimentoField;
-    private JPasswordField senhaField;
-    private JPasswordField confirmarSenhaField;
-    private JButton cadastrarButton;
-
+    public Container c;
+   public JLabel title;
+    public JFormattedTextField cpfField;
+    public JTextField emailField;
+    public JTextField nomeField;
+    public JFormattedTextField dataNascimentoField;
+    public JPasswordField senhaField;
+    public JPasswordField confirmarSenhaField;
+    public JButton cadastrarButton;
+    public JLabel senhaLabel;
+    public JLabel confirmarSenhaLabel;
+    public JPanel p2;
     public PacienteCadastro() {
         setTitle("Cadastro de Usuário");
         setSize(900, 600);
@@ -35,13 +39,13 @@ public class PacienteCadastro extends JFrame {
         p1.setBackground(new Color(255, 255, 232));
         p1.setSize(900, 125);
         p1.setLocation(0, 0);
-        JLabel title = new JLabel("Cadastro de Pacientes");
+        title = new JLabel("Cadastro de Pacientes");
         title.setFont(new Font("Inter", Font.BOLD, 30));
         title.setForeground(new Color(43, 37, 93, 255));
         p1.add(title);
         c.add(p1);
 
-        JPanel p2 = new JPanel(null);
+        p2 = new JPanel(null);
         p2.setBackground(new Color(255, 255, 232));
         p2.setSize(900, 450);
         p2.setLocation(0, 125);
@@ -86,7 +90,7 @@ public class PacienteCadastro extends JFrame {
         dataNascimentoField.setBounds(544, 200, 100, 30);
         p2.add(dataNascimentoField);
 
-        JLabel senhaLabel = new JLabel("Senha:");
+        senhaLabel = new JLabel("Senha:");
         senhaLabel.setFont(new Font("Inter", Font.PLAIN, 16));
         senhaLabel.setBounds(244, 250, 100, 30);
         p2.add(senhaLabel);
@@ -96,7 +100,7 @@ public class PacienteCadastro extends JFrame {
         senhaField.setBounds(394, 250, 250, 30);
         p2.add(senhaField);
 
-        JLabel confirmarSenhaLabel = new JLabel("Confirmar Senha:");
+        confirmarSenhaLabel = new JLabel("Confirmar Senha:");
         confirmarSenhaLabel.setFont(new Font("Inter", Font.PLAIN, 16));
         confirmarSenhaLabel.setBounds(244, 300, 150, 30);
         p2.add(confirmarSenhaLabel);
@@ -120,7 +124,7 @@ public class PacienteCadastro extends JFrame {
                     novoUsuario.setAtivo(true);
                     novoUsuario.setNome(nomeField.getText());
                     novoUsuario.setEmail(emailField.getText());
-                    novoUsuario.setSenha(senhaField.getText());
+                    novoUsuario.setSenha(new String(senhaField.getPassword()));
                     // Novela de colocar data no sql:
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     try {
@@ -178,7 +182,7 @@ public class PacienteCadastro extends JFrame {
         return true;
     }
 
-    private boolean isValidDate(String date) {
+    public boolean isValidDate(String date) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false);
         try {

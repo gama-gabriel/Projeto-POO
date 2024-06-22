@@ -1,8 +1,7 @@
 package Forms;
 
-import DAO.PacienteDAO;
 import DTO.Paciente;
-import DTO.PacienteCadastro;
+import Forms.Cadastro.PacienteCadastro;
 
 import javax.swing.*;
 import java.awt.*;

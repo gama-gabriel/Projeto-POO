@@ -1,14 +1,12 @@
-package Forms;
-
-import DTO.Funcionario;
-
+package Forms.TableModels;
+import DTO.Resultado;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class FuncionarioTableModel  extends AbstractTableModel {
-    private List<Funcionario> dados = new ArrayList<Funcionario>();
-    private String[] colunas = {"codigo","email","nome","senha"};
+public class ResultadoTableModel extends AbstractTableModel {
+    private List<Resultado> dados = new ArrayList<Resultado>();
+    private String[] colunas = {"id", "descrição"};
     @Override
     public int getRowCount() {
         return getDados().size();
@@ -21,13 +19,7 @@ public class FuncionarioTableModel  extends AbstractTableModel {
     public Object getValueAt(int linha, int coluna) {
         switch(coluna){
             case 0: return this.dados.get(linha).getId();
-            case 1: return this.dados.get(linha).getCpf();
-            case 2: return this.dados.get(linha).getNome();
-            case 3: return this.dados.get(linha).getEmail();
-            case 4: return this.dados.get(linha).getDataNascimento();
-            case 5: return this.dados.get(linha).getAtivo();
-            case 6: return this.dados.get(linha).getCargo();
-            case 7: return this.dados.get(linha).getSenha();
+            case 1: return this.dados.get(linha).getDescricao();
             default: return null;
         }
     }
@@ -35,10 +27,11 @@ public class FuncionarioTableModel  extends AbstractTableModel {
     public String getColumnName(int coluna) {
         return getColunas()[coluna];
     }
-    public List<Funcionario> getDados() {
+
+    public List<Resultado> getDados() {
         return dados;
     }
-    public void setDados(List<Funcionario> dados) {
+    public void setDados(List<Resultado> dados) {
         this.dados = dados;
     }
     public String[] getColunas() {
@@ -47,8 +40,7 @@ public class FuncionarioTableModel  extends AbstractTableModel {
     public void setColunas(String[] colunas) {
         this.colunas = colunas;
     }
-    public Funcionario retornaObjeto(int linha){
+    public Resultado retornaObjeto(int linha){
         return dados.get(linha);
     }
 }
-

@@ -1,5 +1,7 @@
 package DTO;
 
+import DAO.AgendamentoDAO;
+
 import java.time.LocalDateTime;
 
 public class Agendamento {
@@ -10,6 +12,10 @@ public class Agendamento {
     private Funcionario supervisor;
     private Exame exame;
     private Resultado resultado;
+    public AgendamentoDAO dao;
+    public void UseService() {
+        this.dao = new AgendamentoDAO();
+    }
 
     public int getId() {
         return id;
@@ -27,7 +33,7 @@ public class Agendamento {
         this.dataHora = dataHora;
     }
 
-    public boolean isCancelado() {
+    public boolean getCancelado() {
         return cancelado;
     }
 

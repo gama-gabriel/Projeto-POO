@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -64,12 +66,13 @@ public class FuncionarioDAO {
             return cont;
         }
     }
+
     public int alterar(Funcionario obj){
         int cont = 0;
         try{
             if(conexao.conectar()){
                 String sql = "update funcionario" +
-                        "    set cpf = ?, nome = ?, email = ?, data_nasc = ?, ativo = ?, cargo = ?, senha = ?)" +
+                        "    set cpf = ?, nome = ?, email = ?, data_nasc = ?, ativo = ?, cargo = ?, senha = ?" +
                         "    where id = ?";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
                 stmt.setString(1, obj.getCpf());
@@ -91,13 +94,13 @@ public class FuncionarioDAO {
             return cont;
         }
     }
-    public int remover(Funcionario obj){
+    public int remover(int id){
         int cont = 0;
         try{
             if(conexao.conectar()){
                 String sql = "delete from funcionario where id=?";
                 PreparedStatement stmt = conexao.preparedStatement(sql);
-                stmt.setInt(1, obj.getId());
+                stmt.setInt(1, id);
                 cont = stmt.executeUpdate();
             }
         }
@@ -122,8 +125,7 @@ public class FuncionarioDAO {
                     obj.setCpf(resultado.getString("cpf"));
                     obj.setNome(resultado.getString("nome"));
                     obj.setEmail(resultado.getString("email"));
-                    java.sql.Date sqlDate = resultado.getDate("data_nasc");
-                    obj.setDataNascimento(new Date(sqlDate.getTime()));
+                    obj.setDataNascimento(resultado.getDate("data_nasc"));
                     obj.setAtivo(resultado.getBoolean("ativo"));
                     obj.setCargo(resultado.getString("cargo"));
                     obj.setSenha(resultado.getString("senha"));
@@ -138,6 +140,7 @@ public class FuncionarioDAO {
             return obj;
         }
     }
+
     public List<Funcionario> retornaLista(String busca){
         List<Funcionario> lista = new ArrayList<Funcionario>();
         try{
@@ -177,6 +180,172 @@ public class FuncionarioDAO {
             return lista;
         }
     }
+
+    public List<Funcionario> pesquisaData(Date busca){
+        List<Funcionario> lista = new ArrayList<Funcionario>();
+        try{
+            if(conexao.conectar()){
+                PreparedStatement stmt;
+                stmt = conexao.preparedStatement("select *  from funcionario "
+                        + "where data_nasc = ?");
+                stmt.setDate(1, new java.sql.Date(busca.getTime()));
+                ResultSet resultado = stmt.executeQuery();
+                while(resultado.next()){
+                    Funcionario obj = new Funcionario();
+                    obj.setId(resultado.getInt("id"));
+                    obj.setCpf(resultado.getString("cpf"));
+                    obj.setNome(resultado.getString("nome"));
+                    obj.setEmail(resultado.getString("email"));
+                    obj.setDataNascimento(resultado.getDate("data_nasc"));
+                    obj.setAtivo(resultado.getBoolean("ativo"));
+                    obj.setCargo(resultado.getString("cargo"));
+                    obj.setSenha(resultado.getString("senha"));
+                    lista.add(obj);
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+            System.out.println("erro sql");
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+            System.out.println("erro java");
+        }
+        finally{
+            conexao.desconectar();
+            return lista;
+        }
+    }
+
+    public List<Funcionario> pesquisaAtivo(String busca){
+        List<Funcionario> lista = new ArrayList<Funcionario>();
+        boolean ativo = Boolean.parseBoolean(busca);
+        try{
+            if(conexao.conectar()){
+                PreparedStatement stmt;
+                stmt = conexao.preparedStatement("select *  from funcionario "
+                        + "where ativo = ?");
+                stmt.setBoolean(1, ativo);
+                ResultSet resultado = stmt.executeQuery();
+                while(resultado.next()){
+                    Funcionario obj = new Funcionario();
+                    obj.setId(resultado.getInt("id"));
+                    obj.setCpf(resultado.getString("cpf"));
+                    obj.setNome(resultado.getString("nome"));
+                    obj.setEmail(resultado.getString("email"));
+                    obj.setDataNascimento(resultado.getDate("data_nasc"));
+                    obj.setAtivo(resultado.getBoolean("ativo"));
+                    obj.setCargo(resultado.getString("cargo"));
+                    obj.setSenha(resultado.getString("senha"));
+                    lista.add(obj);
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+            System.out.println("erro sql");
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+            System.out.println("erro java");
+        }
+        finally{
+            conexao.desconectar();
+            return lista;
+        }
+    }
+
+    public List<Funcionario> pesquisaColuna(String busca, String coluna){
+        List<Funcionario> lista = new ArrayList<Funcionario>();
+        if (coluna == "id") {
+            Funcionario func = pesquisar(Integer.parseInt(busca));
+            lista.add(func);
+            return lista;
+        }
+        try{
+            if(conexao.conectar()){
+                PreparedStatement stmt;
+                stmt = conexao.preparedStatement("select *  from funcionario "
+                        + "where " + coluna + " like ?");
+                stmt.setString(1,"%" + busca + "%");
+                System.out.println(busca);
+                System.out.println(coluna);
+                ResultSet resultado = stmt.executeQuery();
+                while(resultado.next()){
+                    Funcionario obj = new Funcionario();
+                    obj.setId(resultado.getInt("id"));
+                    obj.setCpf(resultado.getString("cpf"));
+                    obj.setNome(resultado.getString("nome"));
+                    obj.setEmail(resultado.getString("email"));
+                    obj.setDataNascimento(resultado.getDate("data_nasc"));
+                    obj.setAtivo(resultado.getBoolean("ativo"));
+                    obj.setCargo(resultado.getString("cargo"));
+                    obj.setSenha(resultado.getString("senha"));
+                    lista.add(obj);
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+            System.out.println("erro sql");
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+            System.out.println("erro java");
+        }
+        finally{
+            conexao.desconectar();
+            return lista;
+        }
+    }
+
+    public boolean pesquisaCpf(String cpf){
+        boolean encontrei = false;
+        try{
+            if(conexao.conectar()){
+                String sql = "select count(*) as total from funcionario where cpf=?";
+                PreparedStatement stmt = conexao.preparedStatement(sql);
+                stmt.setString(1, cpf);
+                ResultSet resultado = stmt.executeQuery();
+                int count = resultado.getInt("total");
+                if( count > 0){
+                    encontrei = true;
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return encontrei;
+        }
+    }
+
+    public boolean pesquisaEmail(String email){
+        boolean encontrei = false;
+        try{
+            if(conexao.conectar()){
+                String sql = "select count(*) as total from funcionario where email=?";
+                PreparedStatement stmt = conexao.preparedStatement(sql);
+                stmt.setString(1, email);
+                ResultSet resultado = stmt.executeQuery();
+                int count = resultado.getInt("total");
+                if( count > 0){
+                    encontrei = true;
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return encontrei;
+        }
+    }
+
     public Funcionario login(String email, String senha){
         Funcionario obj = new Funcionario();
         try{

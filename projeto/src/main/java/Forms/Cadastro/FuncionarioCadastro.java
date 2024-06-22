@@ -1,6 +1,8 @@
-package DTO;
+package Forms.Cadastro;
 
 import DAO.PacienteDAO;
+import DTO.Funcionario;
+import Forms.Cadastro.PacienteCadastro;
 import Forms.FuncionarioMenuForm;
 import Forms.utils.RoundedBorder;
 
@@ -9,22 +11,24 @@ import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FuncionarioCadastro extends JFrame {
-    private Container c;
-    private JFormattedTextField cpfField;
-    private JTextField emailField;
-    private JTextField nomeField;
-    private JFormattedTextField dataNascimentoField;
-    private JTextField cargoField;
-    private JPasswordField senhaField;
-    private JPasswordField confirmarSenhaField;
-    private JButton cadastrarButton;
+    public Container c;
+    public JLabel title;
+    public JFormattedTextField cpfField;
+    public JTextField emailField;
+    public JTextField nomeField;
+    public JFormattedTextField dataNascimentoField;
+    public JTextField cargoField;
+    public JPasswordField senhaField;
+    public JPasswordField confirmarSenhaField;
+    public JButton cadastrarButton;
+    public JLabel senhaLabel;
+    public JLabel confirmarSenhaLabel;
+    public JPanel p2;
 
     public FuncionarioCadastro() {
         setTitle("Cadastro de Funcionários");
@@ -40,13 +44,13 @@ public class FuncionarioCadastro extends JFrame {
         p1.setBackground(new Color(255, 255, 232));
         p1.setSize(900, 125);
         p1.setLocation(0, 0);
-        JLabel title = new JLabel("Cadastro de Funcionários");
+        title = new JLabel("Cadastro de Funcionários");
         title.setFont(new Font("Inter", Font.BOLD, 30));
         title.setForeground(new Color(43, 37, 93, 255));
         p1.add(title);
         c.add(p1);
 
-        JPanel p2 = new JPanel(null);
+        p2 = new JPanel(null);
         p2.setBackground(new Color(255, 255, 232));
         p2.setSize(900, 450);
         p2.setLocation(0, 125);
@@ -101,7 +105,7 @@ public class FuncionarioCadastro extends JFrame {
         cargoField.setBounds(394, 200, 250, 30);
         p2.add(cargoField);
 
-        JLabel senhaLabel = new JLabel("Senha:");
+        senhaLabel = new JLabel("Senha:");
         senhaLabel.setFont(new Font("Inter", Font.PLAIN, 16));
         senhaLabel.setBounds(244, 250, 100, 30);
         p2.add(senhaLabel);
@@ -111,7 +115,7 @@ public class FuncionarioCadastro extends JFrame {
         senhaField.setBounds(394, 250, 250, 30);
         p2.add(senhaField);
 
-        JLabel confirmarSenhaLabel = new JLabel("Confirmar Senha:");
+        confirmarSenhaLabel = new JLabel("Confirmar Senha:");
         confirmarSenhaLabel.setFont(new Font("Inter", Font.PLAIN, 16));
         confirmarSenhaLabel.setBounds(244, 300, 150, 30);
         p2.add(confirmarSenhaLabel);
@@ -126,7 +130,6 @@ public class FuncionarioCadastro extends JFrame {
         cadastrarButton.setBounds(385, 350, 130, 40);
         cadastrarButton.setContentAreaFilled(false);
         cadastrarButton.setFocusPainted(false);
-        cadastrarButton.setSize(130, 45);
         cadastrarButton.setFont(new Font("Inter", Font.BOLD, 16));
         cadastrarButton.setForeground(new Color(255, 255, 232));
         cadastrarButton.setBorder(new RoundedBorder(10, 3));
@@ -155,7 +158,7 @@ public class FuncionarioCadastro extends JFrame {
                     novoUsuario.setNome(nomeField.getText());
                     novoUsuario.setEmail(emailField.getText());
                     novoUsuario.setCargo(cargoField.getText());
-                    novoUsuario.setSenha(senhaField.getText());
+                    novoUsuario.setSenha(new String(senhaField.getPassword()));
                     // Novela de colocar data no sql:
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     try {
@@ -215,7 +218,7 @@ public class FuncionarioCadastro extends JFrame {
         return true;
     }
 
-    private boolean isValidDate(String date) {
+    public boolean isValidDate(String date) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false);
         try {
