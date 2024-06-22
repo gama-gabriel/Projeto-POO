@@ -362,7 +362,7 @@ public class GerenciarAgendamentos extends JFrame {
         colunaPesquisa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (colunaPesquisa.getSelectedItem() == "data de nascimento") {
+                if (colunaPesquisa.getSelectedItem() == "data/hora") {
                     pesquisaTexto.setVisible(false);
                     pesquisaData.setVisible(true);
                 } else {
@@ -380,20 +380,20 @@ public class GerenciarAgendamentos extends JFrame {
         filtrosPesquisa.add(pesquisaLabel);
 
         pesquisaTexto = new JTextField();
-        pesquisaTexto.setBounds(425, 200, 150, 25);
-        pesquisaTexto.setFont(new Font("Inter", Font.PLAIN, 16));
+        pesquisaTexto.setBounds(425, 200, 150, 30);
+        pesquisaTexto.setFont(new Font("Inter", Font.PLAIN, 18));
         filtrosPesquisa.add(pesquisaTexto);
 
-        pesquisaData = new JFormattedTextField(createFormatter("##/##/####"));
-        pesquisaData.setBounds(425, 200, 150, 25);
-        pesquisaData.setFont(new Font("Inter", Font.PLAIN, 16));
+        pesquisaData = new JFormattedTextField(createFormatter("##/##/#### ##:##"));
+        pesquisaData.setBounds(415, 200, 170, 30);
+        pesquisaData.setFont(new Font("Inter", Font.PLAIN, 18));
         pesquisaData.setBorder(new RoundedBorder(1, 1));
         pesquisaData.setVisible(false);
         filtrosPesquisa.add(pesquisaData);
 
         JButton botaoPesquisar = new JButton("Pesquisar");
         botaoPesquisar.setFont(new Font("Inter", Font.BOLD, 16));
-        botaoPesquisar.setBounds(450, 240, 100, 30);
+        botaoPesquisar.setBounds(445, 240, 120, 35);
         botaoPesquisar.setContentAreaFilled(false);
         botaoPesquisar.setFocusPainted(false);
         botaoPesquisar.setFont(new Font("Inter", Font.BOLD, 16));
@@ -419,14 +419,17 @@ public class GerenciarAgendamentos extends JFrame {
                 String busca = pesquisaTexto.getText();
                 String coluna = (String) colunaPesquisa.getSelectedItem();
                 try {
-                    if (coluna == "funcionário") {
+                    assert coluna != null;
+                    if (coluna.equals("func. responsável")) {
                         coluna = "funcionario";
                     }
-                    if (coluna == "data/hora") {
+                    if (coluna.equals("resultado")) {
+                        modeloTabela.setDados(dao.pesquisaResultado(busca));
+                    } else if (coluna.equals("data/hora")) {
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
                         LocalDateTime dataHora = LocalDateTime.parse(pesquisaData.getText(), formatter);
                         modeloTabela.setDados(dao.pesquisaData(dataHora));
-                    } else if (coluna == "cancelado") {
+                    } else if (coluna.equals("cancelado")) {
                         modeloTabela.setDados(dao.pesquisaCancelado(busca));
                     } else {
                         modeloTabela.setDados(dao.pesquisaColuna(busca, coluna));

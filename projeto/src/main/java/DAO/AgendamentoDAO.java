@@ -286,9 +286,53 @@ public class AgendamentoDAO {
         }
     }
 
+    public List<Agendamento> pesquisaResultado(String busca){
+        List<Agendamento> lista = new ArrayList<Agendamento>();
+
+            try {
+                if (conexao.conectar()) {
+                    ResultSet resultado;
+                    if (busca.isEmpty()) {
+                        PreparedStatement stmt;
+                        stmt = conexao.preparedStatement("select *  from agendamento "
+                                + "where resultado is null");
+                        resultado = stmt.executeQuery();
+                    } else {
+                        int id = Integer.parseInt(busca);
+                        PreparedStatement stmt;
+                        stmt = conexao.preparedStatement("select *  from agendamento "
+                                + "where resultado = ?");
+                        stmt.setInt(1, id);
+                        resultado = stmt.executeQuery();
+                    }
+                    while (resultado.next()) {
+                        Agendamento obj = new Agendamento();
+                        obj.setId(resultado.getInt("id"));
+                        obj.setCancelado(resultado.getBoolean("cancelado"));
+                        Date date = resultado.getTimestamp("data");
+                        LocalDateTime dateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+                        obj.setDataHora(dateTime);
+                        obj.setExame(new ExameDAO().pesquisar(resultado.getInt("exame")));
+                        obj.setPaciente(new PacienteDAO().pesquisar(resultado.getInt("paciente")));
+                        obj.setSupervisor(new FuncionarioDAO().pesquisar(resultado.getInt("funcionario")));
+                        if (resultado.getInt("resultado") != 0) {
+                            obj.setResultado(new ResultadoDAO().pesquisar(resultado.getInt("resultado")));
+                        }
+                        lista.add(obj);
+                    }
+                }
+            } catch (Exception err) {
+                System.out.println(err.getMessage());
+            } finally {
+                conexao.desconectar();
+                return lista;
+            }
+
+    }
+
     public List<Agendamento> pesquisaColuna(String busca, String coluna){
         List<Agendamento> lista = new ArrayList<Agendamento>();
-        String[] numCol = {"exame", "paciente", "funcionario", "resultado"};
+        String[] numCol = {"exame", "paciente", "funcionario"};
         if (coluna == "id") {
             Agendamento func = pesquisar(Integer.parseInt(busca));
             lista.add(func);
