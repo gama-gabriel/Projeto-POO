@@ -2,6 +2,7 @@ package Forms.FuncoesFuncionario;
 import DAO.FuncionarioDAO;
 import DTO.Funcionario;
 import Forms.Alteracao.FuncionarioAlterar;
+import Forms.FuncionarioMenuForm;
 import Forms.TableModels.FuncionarioTableModel;
 import Forms.utils.RoundedBorder;
 import java.awt.*;
@@ -14,7 +15,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class GerenciarFuncionarios extends JFrame {    private Container c;
+public class GerenciarFuncionarios extends JFrame {
+    private Container c;
     private JPanel filtrosPesquisa;
     private JTable tabela;
     private JScrollPane viewportTabela;
@@ -60,6 +62,37 @@ public class GerenciarFuncionarios extends JFrame {    private Container c;
         title.setForeground(new Color(43, 37, 93, 255));
         title.setVisible(true);
         p1.add(title);
+
+        JButton botaoVoltar = new JButton("voltar");
+        botaoVoltar.setFont(new Font("Inter", Font.PLAIN, 16));
+        botaoVoltar.setBounds(50, 30, 200, 65);
+        botaoVoltar.setContentAreaFilled(false);
+        botaoVoltar.setFocusPainted(false);
+        botaoVoltar.setFont(new Font("Inter", Font.BOLD, 16));
+        botaoVoltar.setForeground(new Color(255, 255, 232));
+        botaoVoltar.setForeground(new Color(43, 37, 93, 191));
+        botaoVoltar.setBorder(new RoundedBorder(0, 0));
+        botaoVoltar.setOpaque(false);
+        botaoVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botaoVoltar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                botaoVoltar.setForeground(new Color(43, 37, 93, 255));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botaoVoltar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                botaoVoltar.setForeground(new Color(43, 37, 93, 191));
+            }
+        });
+        botaoVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.setVisible(false);
+                dispose();
+                FuncionarioMenuForm telaMenuFunc = new FuncionarioMenuForm(logado);
+            }
+        });
+        p1.add(botaoVoltar);
 
         JLabel labelLogado = new JLabel("Funcionário:", SwingConstants.CENTER);
         labelLogado.setSize(150, 25);

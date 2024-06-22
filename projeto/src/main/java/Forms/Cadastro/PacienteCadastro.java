@@ -124,7 +124,7 @@ public class PacienteCadastro extends JFrame {
                     novoUsuario.setAtivo(true);
                     novoUsuario.setNome(nomeField.getText());
                     novoUsuario.setEmail(emailField.getText());
-                    novoUsuario.setSenha(senhaField.getText());
+                    novoUsuario.setSenha(new String(senhaField.getPassword()));
                     // Novela de colocar data no sql:
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     try {

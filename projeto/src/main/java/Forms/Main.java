@@ -1,13 +1,11 @@
 package Forms;
 
-import DAO.ExameDAO;
-import DAO.FuncionarioDAO;
-import DAO.ResultadoDAO;
+import DAO.*;
 import DTO.Exame;
 import DTO.Funcionario;
 
 import java.util.Date;
-import DAO.PacienteDAO;
+
 import DTO.Paciente;
 import DTO.Resultado;
 

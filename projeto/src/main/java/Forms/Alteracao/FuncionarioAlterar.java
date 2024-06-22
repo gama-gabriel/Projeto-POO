@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class FuncionarioAlterar extends FuncionarioCadastro {
+    private JCheckBox ativoCheck;
     public Funcionario getAlterado() {
         return alterado;
     }
@@ -29,7 +30,24 @@ public class FuncionarioAlterar extends FuncionarioCadastro {
        setAlterado(alterado);
        setTitle("Alteração de cadastro de funcionários");
        title.setText("Alteração de cadastro");
+       dataNascimentoField.setVisible(false);
        cadastrarButton.setVisible(false);
+
+       dataNascimentoField.setBounds(400, 150, 100, 30);
+       dataNascimentoField.setVisible(true);
+
+       JLabel ativoLabel = new JLabel("Ativo:");
+       ativoLabel.setFont(new Font("Inter", Font.PLAIN, 16));
+       ativoLabel.setBounds(580, 150, 40, 30);
+       p2.add(ativoLabel);
+
+       ativoCheck = new JCheckBox();
+       ativoCheck.setBackground(new Color(0xffffe8));
+       ativoCheck.setBounds(624, 150, 30, 30);
+       ativoCheck.setSelected(alterado.getAtivo());
+       ativoCheck.setContentAreaFilled(false);
+       ativoCheck.setFocusPainted(false);
+       p2.add(ativoCheck);
 
        cpfField.setText(alterado.getCpf());
        nomeField.setText(alterado.getNome());
@@ -77,11 +95,11 @@ public class FuncionarioAlterar extends FuncionarioCadastro {
                    Funcionario novoUsuario = new Funcionario();
                    novoUsuario.setId(alterado.getId());
                    novoUsuario.setCpf(cpfField.getText());
-                   novoUsuario.setAtivo(true);
+                   novoUsuario.setAtivo(ativoCheck.isSelected());
                    novoUsuario.setNome(nomeField.getText());
                    novoUsuario.setEmail(emailField.getText());
                    novoUsuario.setCargo(cargoField.getText());
-                   novoUsuario.setSenha(senhaField.getText());
+                   novoUsuario.setSenha(new String(senhaField.getPassword()));
                    // Novela de colocar data no sql:
                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                    try {

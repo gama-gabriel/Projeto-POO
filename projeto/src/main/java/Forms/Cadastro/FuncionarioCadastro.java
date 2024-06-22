@@ -158,7 +158,7 @@ public class FuncionarioCadastro extends JFrame {
                     novoUsuario.setNome(nomeField.getText());
                     novoUsuario.setEmail(emailField.getText());
                     novoUsuario.setCargo(cargoField.getText());
-                    novoUsuario.setSenha(senhaField.getText());
+                    novoUsuario.setSenha(new String(senhaField.getPassword()));
                     // Novela de colocar data no sql:
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     try {

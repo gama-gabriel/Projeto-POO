@@ -135,6 +135,7 @@ public class PacienteDAO {
             return obj;
         }
     }
+
     public List<Paciente> retornaLista(String busca){
         List<Paciente> lista = new ArrayList<Paciente>();
         try{
@@ -289,6 +290,7 @@ public class PacienteDAO {
             return lista;
         }
     }
+
     public boolean pesquisaCpf(String cpf){
         boolean encontrei = false;
         try{

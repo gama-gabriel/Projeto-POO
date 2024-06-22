@@ -1,14 +1,9 @@
 package Forms;
 import DTO.Funcionario;
-import Forms.FuncoesFuncionario.GerenciarExames;
-import Forms.FuncoesFuncionario.GerenciarFuncionarios;
-import Forms.FuncoesFuncionario.GerenciarPacientes;
-import Forms.FuncoesFuncionario.GerenciarResultados;
+import Forms.FuncoesFuncionario.*;
 import Forms.utils.RoundedBorder;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import java.awt.event.*;
 
 public class FuncionarioMenuForm extends JFrame {
@@ -17,6 +12,7 @@ public class FuncionarioMenuForm extends JFrame {
     private JButton gerenciarFuncionarios;
     private JButton gerenciarExames;
     private JButton gerenciarResultados;
+    private JButton gerenciarAgendamentos;
     private JLabel funcLogado;
 
     public FuncionarioMenuForm(Funcionario logado) {
@@ -194,6 +190,40 @@ public class FuncionarioMenuForm extends JFrame {
         });
 
         p2.add(gerenciarResultados);
+
+        gerenciarAgendamentos = new JButton("<html><div style='text-align: center;'>Gerenciar<br>agendamentos</div></html>");
+        gerenciarAgendamentos.setFont(new Font("Inter", Font.BOLD, 16));
+        gerenciarAgendamentos.setBounds(50, 200, 150, 70);
+        gerenciarAgendamentos.setContentAreaFilled(false);
+        gerenciarAgendamentos.setFocusPainted(false);
+        gerenciarAgendamentos.setFont(new Font("Inter", Font.BOLD, 16));
+        gerenciarAgendamentos.setHorizontalAlignment(SwingConstants.CENTER);
+        gerenciarAgendamentos.setVerticalAlignment(SwingConstants.CENTER);
+        gerenciarAgendamentos.setForeground(new Color(255, 255, 232));
+        gerenciarAgendamentos.setBorder(new RoundedBorder(10, 3));
+        gerenciarAgendamentos.setForeground(new Color(43, 37, 93, 191));
+        gerenciarAgendamentos.setOpaque(false);
+        gerenciarAgendamentos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                gerenciarAgendamentos.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                gerenciarAgendamentos.setForeground(new Color(43, 37, 93, 255));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                gerenciarAgendamentos.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                gerenciarAgendamentos.setForeground(new Color(43, 37, 93, 191));
+            }
+        });
+        gerenciarAgendamentos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.setVisible(false);
+                dispose();
+                GerenciarAgendamentos telaGerenciarAgendamentos = new GerenciarAgendamentos(logado);
+            }
+        });
+        p2.add(gerenciarAgendamentos);
+
 
         c.add(p2);
         setVisible(true);
