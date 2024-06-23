@@ -78,7 +78,10 @@ public class PacienteLogin extends JFrame {
                 Paciente PacLogado = aux.autenticacao(email, senha);
 
                 if (PacLogado.getId() != 0) {
-                    JOptionPane.showMessageDialog(null, "Login bem-sucedido!");
+                    JOptionPane.showMessageDialog(null, "Login bem-sucedido! \n Seja bem vindo " + PacLogado.getNome() + "!");
+                    c.setVisible(false);
+                    dispose();
+                    PacienteMenuForm telaPaciente = new PacienteMenuForm(PacLogado);
                 } else {
                     JOptionPane.showMessageDialog(null, "Email ou senha incorretos.");
                 }
@@ -95,9 +98,5 @@ public class PacienteLogin extends JFrame {
         c.add(p2);
 
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new PacienteLogin();
     }
 }

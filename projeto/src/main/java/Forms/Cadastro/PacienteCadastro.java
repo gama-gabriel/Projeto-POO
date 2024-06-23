@@ -2,6 +2,7 @@ package Forms.Cadastro;
 
 import DAO.PacienteDAO;
 import DTO.Paciente;
+import Forms.PacienteMenuForm;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -124,7 +125,7 @@ public class PacienteCadastro extends JFrame {
                     novoUsuario.setAtivo(true);
                     novoUsuario.setNome(nomeField.getText());
                     novoUsuario.setEmail(emailField.getText());
-                    novoUsuario.setSenha(new String(senhaField.getPassword()));
+                    novoUsuario.setSenha(senhaField.getText());
                     // Novela de colocar data no sql:
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                     try {
@@ -135,6 +136,9 @@ public class PacienteCadastro extends JFrame {
                     novoUsuario.UseService();
                     novoUsuario.dao.inserir(novoUsuario);
                     JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+                    c.setVisible(false);
+                    dispose();
+                    PacienteMenuForm telaPaciente = new PacienteMenuForm(novoUsuario);
                 }
             }
         });
