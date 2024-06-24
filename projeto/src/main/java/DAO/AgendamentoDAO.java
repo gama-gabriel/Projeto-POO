@@ -77,6 +77,34 @@ public class AgendamentoDAO {
             return cont;
         }
     }
+    public int inserirPaciente(Agendamento obj){
+        int cont = 0;
+        try{
+            if(conexao.conectar()){
+                String sql = "insert into agendamento" +
+                        "    (data, cancelado, paciente, exame, resultado)" +
+                        "    values (?,?,?,?,?);";
+                PreparedStatement stmt = conexao.preparedStatement(sql);
+                stmt.setTimestamp(1, new java.sql.Timestamp(obj.getDataHora().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()));
+                stmt.setBoolean(2, obj.getCancelado());
+                stmt.setInt(3, obj.getPaciente().getId());
+                stmt.setInt(4, obj.getExame().getId());
+                if (obj.getResultado() != null) {
+                    stmt.setInt(5, obj.getResultado().getId());
+                } else {
+                    stmt.setNull(5, java.sql.Types.INTEGER);
+                }
+                cont = stmt.executeUpdate();
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return cont;
+        }
+    }
     public int alterar(Agendamento obj){
         int cont = 0;
         try{

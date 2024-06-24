@@ -170,6 +170,37 @@ public class ExameDAO {
             return lista;
         }
     }
+    public List<Exame> retornaListaPaciente(){
+        List<Exame> lista = new ArrayList<Exame>();
+        try{
+            if(conexao.conectar()){
+                PreparedStatement stmt;
+                stmt = conexao.preparedStatement("select *  from exames "
+                            + "where disponivel = 1 order by nome");
+                ResultSet resultado = stmt.executeQuery();
+                while(resultado.next()){
+                    Exame obj = new Exame();
+                    obj.setId(resultado.getInt("id"));
+                    obj.setNome(resultado.getString("nome"));
+                    obj.setDisponivel(resultado.getBoolean("disponivel"));
+                    obj.setDescricao(resultado.getString("descricao"));
+                    obj.setPreparo(resultado.getString("preparo"));
+                    obj.setInstrucoesPos(resultado.getString("instrucoes"));
+                    lista.add(obj);
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return lista;
+        }
+    }
 
     public List<Exame> pesquisaDsponivel(String busca){
         List<Exame> lista = new ArrayList<Exame>();
@@ -202,6 +233,33 @@ public class ExameDAO {
         finally{
             conexao.desconectar();
             return lista;
+        }
+    }
+
+    public Exame findByName(String nome){
+        Exame obj = new Exame();
+        try{
+            if(conexao.conectar()){
+                String sql = "select *  from exames where nome=?";
+                PreparedStatement stmt = conexao.preparedStatement(sql);
+                stmt.setString(1, nome);
+                ResultSet resultado = stmt.executeQuery();
+                if(! resultado.isClosed()){
+                    obj.setId(resultado.getInt("id"));
+                    obj.setNome(resultado.getString("nome"));
+                    obj.setDisponivel(resultado.getBoolean("disponivel"));
+                    obj.setDescricao(resultado.getString("descricao"));
+                    obj.setPreparo(resultado.getString("preparo"));
+                    obj.setInstrucoesPos(resultado.getString("instrucoes"));
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return obj;
         }
     }
 
