@@ -1,13 +1,15 @@
 package Forms;
 
 import DTO.Paciente;
+import Forms.FuncoesFuncionario.CancelarAgendamento;
+import Forms.FuncoesFuncionario.ListarAgendamento;
 import Forms.utils.RoundedBorder;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Forms.MarcarExame;
+import Forms.MarcarAgendamento;
 
 public class PacienteMenuForm extends JFrame {
     private Container c;
@@ -66,19 +68,23 @@ public class PacienteMenuForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 c.setVisible(false);
                 dispose();
-                MarcarExame exameForm = new MarcarExame(logado);
+                MarcarAgendamento exameForm = new MarcarAgendamento(logado);
             }
         });
         adicionarOpcao(p2, "Listar consultas", "forms/utils/listar-consulta.png", 150, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                c.setVisible(false);
+                dispose();
+                ListarAgendamento exameForm = new ListarAgendamento(logado);
             }
         });
         adicionarOpcao(p2, "Cancelar consultas", "forms/utils/cancelar.png", 250, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                c.setVisible(false);
+                dispose();
+                CancelarAgendamento exameForm = new CancelarAgendamento(logado);
             }
         });
 

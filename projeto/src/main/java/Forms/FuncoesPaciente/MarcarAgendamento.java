@@ -22,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
-public class MarcarExame extends JFrame {
+public class MarcarAgendamento extends JFrame {
     private Container c;
     private List<Exame> examesDiponiveis;
     private ExameDAO finder = new ExameDAO();
@@ -30,7 +30,7 @@ public class MarcarExame extends JFrame {
     private JFormattedTextField dataAgendamento;
     private JFormattedTextField horaField;
 
-    public MarcarExame(Paciente logado) {
+    public MarcarAgendamento(Paciente logado) {
         setTitle("Cadastro de Agendamento");
         setSize(900, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -53,6 +53,37 @@ public class MarcarExame extends JFrame {
         p1.add(title);
 
         c.add(p1);
+
+        JButton botaoVoltar = new JButton("voltar");
+        botaoVoltar.setFont(new Font("Inter", Font.PLAIN, 16));
+        botaoVoltar.setBounds(50, 30, 200, 65);
+        botaoVoltar.setContentAreaFilled(false);
+        botaoVoltar.setFocusPainted(false);
+        botaoVoltar.setFont(new Font("Inter", Font.BOLD, 16));
+        botaoVoltar.setForeground(new Color(255, 255, 232));
+        botaoVoltar.setForeground(new Color(43, 37, 93, 191));
+        botaoVoltar.setBorder(new RoundedBorder(0, 0));
+        botaoVoltar.setOpaque(false);
+        botaoVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botaoVoltar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                botaoVoltar.setForeground(new Color(43, 37, 93, 255));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botaoVoltar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                botaoVoltar.setForeground(new Color(43, 37, 93, 191));
+            }
+        });
+        botaoVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.setVisible(false);
+                dispose();
+                PacienteMenuForm telaMenuFunc = new PacienteMenuForm(logado);
+            }
+        });
+        p1.add(botaoVoltar);
 
         JPanel p2 = new JPanel(null);
         p2.setBackground(new Color(255, 255, 232));
@@ -146,7 +177,7 @@ public class MarcarExame extends JFrame {
         } else if (tipo.equals("Combobox")) {
             tipoExame = new JComboBox<>();
             tipoExame.removeAllItems();
-            examesDiponiveis = finder.retornaListaPaciente();
+            examesDiponiveis = finder.retornaLista("");
             for (Exame exame : examesDiponiveis) {
                 String nome_exame = exame.getNome();
                 tipoExame.addItem(nome_exame);
@@ -168,9 +199,5 @@ public class MarcarExame extends JFrame {
             e.printStackTrace();
         }
         return formatter;
-    }
-
-    public static void main(String[] args) {
-        new MarcarExame(new Paciente());
     }
 }

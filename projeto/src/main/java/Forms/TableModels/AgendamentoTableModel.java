@@ -9,14 +9,17 @@ import java.util.List;
 public class AgendamentoTableModel extends AbstractTableModel {
     private List<Agendamento> dados = new ArrayList<Agendamento>();
     private String[] colunas = {"id", "data/hora", "cancelado", "paciente", "func. responsável", "exame", "resultado"};
+
     @Override
     public int getRowCount() {
         return getDados().size();
     }
-   @Override
+
+    @Override
     public int getColumnCount() {
         return getColunas().length;
     }
+
     @Override
     public Object getValueAt(int linha, int coluna) {
         switch(coluna){
@@ -32,11 +35,11 @@ public class AgendamentoTableModel extends AbstractTableModel {
                 } else {
                     return this.dados.get(linha).getResultado().getId();
                 }
-
             }
             default: return null;
         }
     }
+
     @Override
     public String getColumnName(int coluna) {
         return getColunas()[coluna];
@@ -45,16 +48,28 @@ public class AgendamentoTableModel extends AbstractTableModel {
     public List<Agendamento> getDados() {
         return dados;
     }
+
     public void setDados(List<Agendamento> dados) {
         this.dados = dados;
     }
+
     public String[] getColunas() {
         return colunas;
     }
+
     public void setColunas(String[] colunas) {
         this.colunas = colunas;
     }
-    public Agendamento retornaObjeto(int linha){
+
+    public Agendamento retornaObjeto(int linha) {
         return dados.get(linha);
+    }
+
+    // Novo método getAgendamentoAt(int rowIndex)
+    public Agendamento getAgendamentoAt(int rowIndex) {
+        if (rowIndex >= 0 && rowIndex < dados.size()) {
+            return dados.get(rowIndex);
+        }
+        return null;
     }
 }

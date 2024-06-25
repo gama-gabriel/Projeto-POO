@@ -229,6 +229,50 @@ public class AgendamentoDAO {
             return lista;
         }
     }
+    public List<Agendamento> retornaLista(String busca, int paciente){
+        List<Agendamento> lista = new ArrayList<Agendamento>();
+        try{
+            if(conexao.conectar()){
+                PreparedStatement stmt;
+                if(busca.length() > 0){
+                    stmt = conexao.preparedStatement("select *  from agendamento "
+                            + "where id like ? order by id");
+                    stmt.setString(1, "%"+ busca + "%");
+                } else {
+                    stmt = conexao.preparedStatement("select *  from agendamento "
+                            + "where paciente = ? order by id");
+                    stmt.setInt(1, paciente);
+                }
+                ResultSet resultado = stmt.executeQuery();
+                while(resultado.next()){
+                    Agendamento obj = new Agendamento();
+                    obj.setId(resultado.getInt("id"));
+                    obj.setCancelado(resultado.getBoolean("cancelado"));
+                    Date date = resultado.getTimestamp("data");
+                    LocalDateTime dateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+                    obj.setDataHora(dateTime);
+                    obj.setExame(new ExameDAO().pesquisar(resultado.getInt("exame")));
+                    obj.setPaciente(new PacienteDAO().pesquisar(resultado.getInt("paciente")));
+                    obj.setSupervisor(new FuncionarioDAO().pesquisar(resultado.getInt("funcionario")));
+                    if (resultado.getInt("resultado") != 0) {
+                        obj.setResultado(new ResultadoDAO().pesquisar(resultado.getInt("resultado")));
+                    }
+
+                    lista.add(obj);
+                }
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return lista;
+        }
+    }
 
 
     public List<Agendamento> pesquisaData(LocalDateTime busca){
