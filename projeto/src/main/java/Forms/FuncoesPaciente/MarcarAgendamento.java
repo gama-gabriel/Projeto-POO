@@ -1,4 +1,4 @@
-package Forms;
+package Forms.FuncoesPaciente;
 
 import DAO.AgendamentoDAO;
 import DAO.ExameDAO;
@@ -7,6 +7,7 @@ import DTO.Agendamento;
 import DTO.Exame;
 import DTO.Funcionario;
 import DTO.Paciente;
+import Forms.PacienteMenuForm;
 import Forms.utils.RoundedBorder;
 
 import javax.swing.*;
@@ -28,7 +29,6 @@ public class MarcarAgendamento extends JFrame {
     private Container c;
     private List<Exame> examesDiponiveis;
     private List<Funcionario> medicosDisponiveis;
-
     private ExameDAO finder = new ExameDAO();
     private FuncionarioDAO finderMedico = new FuncionarioDAO();
     private JComboBox<String> tipoExame;
@@ -142,7 +142,6 @@ public class MarcarAgendamento extends JFrame {
                     Exame exame = exameDao.findByName(nomeExame);
                     FuncionarioDAO medDAO = new FuncionarioDAO();
                     Funcionario medico = medDAO.pesquisar(id_medico);
-                    System.out.println(medico.getId());
                     AgendamentoDAO aux = new AgendamentoDAO();
                     Agendamento novoAgendamento = new Agendamento();
                     novoAgendamento.setPaciente(logado);
