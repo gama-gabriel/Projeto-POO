@@ -104,6 +104,15 @@ public class CancelarAgendamento extends JFrame {
         p2.setSize(1000, 500);
         p2.setLocation(0, 125);
 
+        JLabel instrucao = new JLabel("Para cancelar um agendamento, clice duas vezes nele.");
+        instrucao.setLocation(300, 40);
+        instrucao.setSize(400, 40);
+        instrucao.setFont(new Font("Inter", Font.PLAIN, 12));
+        instrucao.setForeground(new Color(43, 37, 93, 255));
+        instrucao.setVisible(true);
+        p2.add(instrucao);
+
+
         DefaultTableCellRenderer celulaPadrao = new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -159,7 +168,9 @@ public class CancelarAgendamento extends JFrame {
                     int resposta = JOptionPane.showConfirmDialog(c, "Tem certeza que deseja cancelar o agendamento do exame " + agendamento.getExame().getNome() + "?", "Confirmação", JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
                         JOptionPane.showMessageDialog(c, "Agendamento cancelado com sucesso!", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
-                        // Lógica de cancelamento do agendamento aqui
+                        AgendamentoDAO dao = new AgendamentoDAO();
+                        dao.cancelar(agendamento);
+                        modeloTabela.setDados(dao.retornaLista("", logado.getId()));
                     } else {
                         JOptionPane.showMessageDialog(c, "Operação de cancelamento cancelada.", "Cancelamento", JOptionPane.INFORMATION_MESSAGE);
                     }

@@ -481,4 +481,24 @@ public class AgendamentoDAO {
             }
         }
     }
+    public int cancelar(Agendamento obj){
+        int cont = 0;
+        try{
+            if(conexao.conectar()){
+                String sql = "update agendamento" +
+                        "    set cancelado = true " +
+                        "    where id = ?";
+                PreparedStatement stmt = conexao.preparedStatement(sql);
+                stmt.setInt(1, obj.getId());
+                cont = stmt.executeUpdate();
+            }
+        }
+        catch(SQLException err){
+            System.err.println(err.getMessage());
+        }
+        finally{
+            conexao.desconectar();
+            return cont;
+        }
+    }
 }
