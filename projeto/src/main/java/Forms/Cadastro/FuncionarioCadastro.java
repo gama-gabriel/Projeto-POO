@@ -1,5 +1,6 @@
 package Forms.Cadastro;
 
+import DAO.FuncionarioDAO;
 import DAO.PacienteDAO;
 import DTO.Funcionario;
 import Forms.Cadastro.PacienteCadastro;
@@ -182,7 +183,7 @@ public class FuncionarioCadastro extends JFrame {
     }
 
     private boolean validarCampos() {
-        PacienteDAO validador = new PacienteDAO();
+        FuncionarioDAO validador = new FuncionarioDAO();
         String cpf = cpfField.getText();
         String email = emailField.getText();
         String nome = nomeField.getText();

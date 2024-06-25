@@ -1,4 +1,4 @@
-package Forms.FuncoesFuncionario;
+package Forms.FuncoesPaciente;
 
 import DAO.AgendamentoDAO;
 import DTO.Agendamento;

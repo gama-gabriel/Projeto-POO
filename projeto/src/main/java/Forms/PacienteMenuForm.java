@@ -1,8 +1,8 @@
 package Forms;
 
 import DTO.Paciente;
-import Forms.FuncoesFuncionario.CancelarAgendamento;
-import Forms.FuncoesFuncionario.ListarAgendamento;
+import Forms.FuncoesPaciente.CancelarAgendamento;
+import Forms.FuncoesPaciente.ListarAgendamento;
 import Forms.utils.RoundedBorder;
 
 import javax.swing.*;
@@ -13,7 +13,7 @@ import Forms.MarcarAgendamento;
 
 public class PacienteMenuForm extends JFrame {
     private Container c;
-    private JLabel funcLogado;
+    private JLabel pacienteLogado;
 
     public PacienteMenuForm(Paciente logado) {
         setTitle("Menu Paciente");
@@ -46,13 +46,13 @@ public class PacienteMenuForm extends JFrame {
         labelLogado.setVisible(true);
         p1.add(labelLogado);
 
-        funcLogado = new JLabel(logado.getNome(), SwingConstants.CENTER);
-        funcLogado.setSize(150, 25);
-        funcLogado.setLocation(700, 55);
-        funcLogado.setFont(new Font("Inter", Font.PLAIN, 14));
-        funcLogado.setForeground(new Color(43, 37, 93, 255));
-        funcLogado.setVisible(true);
-        p1.add(funcLogado);
+        pacienteLogado = new JLabel(logado.getNome(), SwingConstants.CENTER);
+        pacienteLogado.setSize(150, 25);
+        pacienteLogado.setLocation(700, 55);
+        pacienteLogado.setFont(new Font("Inter", Font.PLAIN, 14));
+        pacienteLogado.setForeground(new Color(43, 37, 93, 255));
+        pacienteLogado.setVisible(true);
+        p1.add(pacienteLogado);
 
         c.add(p1);
 

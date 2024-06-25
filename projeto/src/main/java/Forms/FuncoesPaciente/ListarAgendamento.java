@@ -1,4 +1,4 @@
-package Forms.FuncoesFuncionario;
+package Forms.FuncoesPaciente;
 import DAO.AgendamentoDAO;
 import DAO.FuncionarioDAO;
 import DTO.Agendamento;
@@ -50,6 +50,7 @@ public class ListarAgendamento extends JFrame {
         modeloTabela = new AgendamentoTableModel();
         dao = new AgendamentoDAO();
         modeloTabela.setDados(dao.retornaLista("",logado.getId()));
+        System.out.println(modeloTabela.getDados().get(0).getSupervisor().getId());
 
         setTitle("Gerenciamento de agendamentos");
         setSize(1000, 600);
@@ -71,6 +72,11 @@ public class ListarAgendamento extends JFrame {
         title.setForeground(new Color(43, 37, 93, 255));
         title.setVisible(true);
         p1.add(title);
+
+        JPanel p2 = new JPanel(null);
+        p2.setBackground(new Color(255, 255, 232));
+        p2.setSize(1000, 500);
+        p2.setLocation(0, 125);
 
         JButton botaoVoltar = new JButton("voltar");
         botaoVoltar.setFont(new Font("Inter", Font.PLAIN, 16));
@@ -121,15 +127,6 @@ public class ListarAgendamento extends JFrame {
 
 
         c.add(p1);
-
-        JPanel p2 = new JPanel(null);
-        p2.setBackground(new Color(255, 255, 232));
-        p2.setSize(1000, 500);
-        p2.setLocation(0, 125);
-
-        JComboBox lista = new JComboBox(new String[] {"a","b","c"});
-        lista.setBounds(100, 50, 200, 30);
-        lista.setBackground(new Color(0x999999));
 
         DefaultTableCellRenderer celulaPadrao = new DefaultTableCellRenderer() {
             @Override
@@ -194,8 +191,6 @@ public class ListarAgendamento extends JFrame {
         });
         viewportTabela.setForeground(new Color(0x2b255d));
         viewportTabela.setViewportView(tabela);
-
-
 
         filtrosPesquisa = new JPanel(null);
         filtrosPesquisa.setBounds(0, 40, 1000, 835);

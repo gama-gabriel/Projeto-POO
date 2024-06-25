@@ -2,8 +2,10 @@ package Forms;
 
 import DAO.AgendamentoDAO;
 import DAO.ExameDAO;
+import DAO.FuncionarioDAO;
 import DTO.Agendamento;
 import DTO.Exame;
+import DTO.Funcionario;
 import DTO.Paciente;
 import Forms.utils.RoundedBorder;
 
@@ -25,8 +27,12 @@ import java.util.List;
 public class MarcarAgendamento extends JFrame {
     private Container c;
     private List<Exame> examesDiponiveis;
+    private List<Funcionario> medicosDisponiveis;
+
     private ExameDAO finder = new ExameDAO();
+    private FuncionarioDAO finderMedico = new FuncionarioDAO();
     private JComboBox<String> tipoExame;
+    private JComboBox<String> nomeMedico;
     private JFormattedTextField dataAgendamento;
     private JFormattedTextField horaField;
 
@@ -93,7 +99,8 @@ public class MarcarAgendamento extends JFrame {
 
         // Adicionar campos de texto e botões
         adicionarCampo(p2, "Data e Hora", 100, 10, 400, 30, "Calendario");
-        adicionarCampo(p2, "Exame ID", 450, 10, 400, 30, "Combobox");
+        adicionarCampo(p2, "Nome do exame", 450, 10, 400, 30, "Combobox");
+        adicionarCampo(p2, "Médico responsável", 450, 100, 400, 30, "Medico");
 
         JButton salvarBtn = new JButton("Agendar");
         salvarBtn.setBorder(new RoundedBorder(20, 2));
@@ -127,16 +134,23 @@ public class MarcarAgendamento extends JFrame {
                     LocalTime hora = LocalTime.parse(horaStr, timeFormatter);
                     LocalDateTime dataHora = LocalDateTime.of(data, hora);
 
+                    String medSelecionado = (String) nomeMedico.getSelectedItem();
+                    int id_medico = Integer.parseInt(medSelecionado.substring(0, medSelecionado.indexOf(':')));
+
                     ExameDAO exameDao = new ExameDAO();
                     String nomeExame = (String) tipoExame.getSelectedItem();
                     Exame exame = exameDao.findByName(nomeExame);
+                    FuncionarioDAO medDAO = new FuncionarioDAO();
+                    Funcionario medico = medDAO.pesquisar(id_medico);
+                    System.out.println(medico.getId());
                     AgendamentoDAO aux = new AgendamentoDAO();
                     Agendamento novoAgendamento = new Agendamento();
                     novoAgendamento.setPaciente(logado);
                     novoAgendamento.setExame(exame);
+                    novoAgendamento.setSupervisor(medico);
                     novoAgendamento.setDataHora(dataHora);
                     novoAgendamento.setCancelado(false);
-                    aux.inserirPaciente(novoAgendamento);
+                    aux.inserir(novoAgendamento);
 
                     JOptionPane.showMessageDialog(c, "Agendamento marcado com sucesso!", "Agendado!", JOptionPane.INFORMATION_MESSAGE);
                     c.setVisible(false);
@@ -185,7 +199,21 @@ public class MarcarAgendamento extends JFrame {
             tipoExame.setFont(new Font("Inter", Font.PLAIN, 16));
             tipoExame.setBounds(x + 20, y + 50, 350, 30);
             panel.add(tipoExame);
-        } else {
+        } else if (tipo.equals("Medico")) {
+            nomeMedico = new JComboBox<>();
+            nomeMedico.removeAllItems();
+            medicosDisponiveis = finderMedico.retornaLista("");
+            for (Funcionario medico: medicosDisponiveis) {
+                String nome_medico = medico.getNome();
+                String cargo = medico.getCargo();
+                int id_medico = medico.getId();
+                nomeMedico.addItem(String.format("%d: %s - %s", id_medico, nome_medico, cargo));
+            }
+            nomeMedico.setFont(new Font("Inter", Font.PLAIN, 16));
+            nomeMedico.setBounds(x + 20, y + 50, 350, 30);
+            panel.add(nomeMedico);
+        }
+        else {
             System.out.println("E oq meu parceiro?");
         }
     }
