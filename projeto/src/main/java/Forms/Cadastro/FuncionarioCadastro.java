@@ -172,7 +172,8 @@ public class FuncionarioCadastro extends JFrame {
                     JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
                     c.setVisible(false);
                     dispose();
-                    FuncionarioMenuForm telaFuncLogado = new FuncionarioMenuForm(novoUsuario);
+                    Funcionario logado = novoUsuario.dao.pesquisaColuna(emailField.getText(), "email").get(0);
+                    FuncionarioMenuForm telaFuncLogado = new FuncionarioMenuForm(logado);
                 }
             }
         });

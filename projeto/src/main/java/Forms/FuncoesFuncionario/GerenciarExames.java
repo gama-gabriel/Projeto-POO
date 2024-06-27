@@ -1,4 +1,5 @@
 package Forms.FuncoesFuncionario;
+import DAO.AgendamentoDAO;
 import DAO.ExameDAO;
 import DTO.*;
 import Forms.Alteracao.ExameAlterar;
@@ -12,6 +13,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.MaskFormatter;
 import java.awt.event.*;
 import java.text.ParseException;
+import java.util.List;
 
 public class GerenciarExames extends JFrame {
     private Container c;
@@ -226,7 +228,6 @@ public class GerenciarExames extends JFrame {
                 c.setVisible(false);
                 dispose();
                 ExameAlterar telaAterar = new ExameAlterar(logado, alterado);
-                System.out.println(id);
             }
         });
         p2.add(opcaoAlterar);
@@ -263,6 +264,12 @@ public class GerenciarExames extends JFrame {
                 int id = (int) tabela.getValueAt(row, 0);
                 int dialogButton = JOptionPane.showConfirmDialog (null, String.format("Tem certeza que quer excluir o exame de id %d?", id),"Confirmação",JOptionPane.YES_NO_OPTION);
                 if(dialogButton == JOptionPane.YES_OPTION) {
+                    AgendamentoDAO agDAO = new AgendamentoDAO();
+                    List<Agendamento> agendados = agDAO.pesquisaColuna(String.valueOf(id), "exame");
+                    if (!agendados.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Esse exame está marcado em um agendamento. Exclua o agendamento para prosseguir", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     viewportTabela.setVisible(false);
                     tabela.clearSelection();
                     dao.remover(id);
@@ -272,7 +279,6 @@ public class GerenciarExames extends JFrame {
                     JOptionPane.showMessageDialog(null, "Exame excluído!", "Sucesso", JOptionPane.DEFAULT_OPTION);
 
                 }
-                System.out.println(id);
             }
         });
         p2.add(opcaoDeletar);

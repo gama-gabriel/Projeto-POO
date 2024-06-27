@@ -38,6 +38,38 @@ public class PacienteMenuForm extends JFrame {
         title.setVisible(true);
         p1.add(title);
 
+
+        JButton botaoVoltar = new JButton("voltar");
+        botaoVoltar.setFont(new Font("Inter", Font.PLAIN, 16));
+        botaoVoltar.setBounds(50, 30, 80, 65);
+        botaoVoltar.setContentAreaFilled(false);
+        botaoVoltar.setFocusPainted(false);
+        botaoVoltar.setFont(new Font("Inter", Font.BOLD, 16));
+        botaoVoltar.setForeground(new Color(255, 255, 232));
+        botaoVoltar.setForeground(new Color(43, 37, 93, 191));
+        botaoVoltar.setBorder(new RoundedBorder(0, 0));
+        botaoVoltar.setOpaque(false);
+        botaoVoltar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botaoVoltar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                botaoVoltar.setForeground(new Color(43, 37, 93, 255));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botaoVoltar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                botaoVoltar.setForeground(new Color(43, 37, 93, 191));
+            }
+        });
+        botaoVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.setVisible(false);
+                dispose();
+                MenuForm menu = new MenuForm();
+            }
+        });
+        p1.add(botaoVoltar);
+
         JLabel labelLogado = new JLabel("Paciente:", SwingConstants.CENTER);
         labelLogado.setSize(150, 25);
         labelLogado.setLocation(700, 35);

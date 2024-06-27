@@ -1,5 +1,7 @@
 package Forms.FuncoesFuncionario;
+import DAO.AgendamentoDAO;
 import DAO.PacienteDAO;
+import DTO.Agendamento;
 import DTO.Funcionario;
 import DTO.Paciente;
 import Forms.Alteracao.PacienteAlterar;
@@ -15,6 +17,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class GerenciarPacientes extends JFrame {
     private Container c;
@@ -220,7 +223,6 @@ public void mouseExited(java.awt.event.MouseEvent evt) {
                 c.setVisible(false);
                 dispose();
                 PacienteAlterar telaAterar = new PacienteAlterar(logado, alterado);
-                System.out.println(id);
             }
         });
         p2.add(opcaoAlterar);
@@ -257,6 +259,12 @@ public void mouseExited(java.awt.event.MouseEvent evt) {
                 int id = (int) tabela.getValueAt(row, 0);
                 int dialogButton = JOptionPane.showConfirmDialog (null, String.format("Tem certeza que quer excluir o paciente de id %d?", id),"Confirmação",JOptionPane.YES_NO_OPTION);
                 if(dialogButton == JOptionPane.YES_OPTION) {
+                    AgendamentoDAO agDAO = new AgendamentoDAO();
+                    List<Agendamento> agendados = agDAO.pesquisaColuna(String.valueOf(id), "paciente");
+                    if (!agendados.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Esse paciente possui um agendamento marcado. Exclua o agendamento para prosseguir", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     viewportTabela.setVisible(false);
                     tabela.clearSelection();
                     dao.remover(id);
@@ -266,7 +274,6 @@ public void mouseExited(java.awt.event.MouseEvent evt) {
                     JOptionPane.showMessageDialog(null, "Paciente excluído!", "Sucesso", JOptionPane.DEFAULT_OPTION);
 
                 }
-                System.out.println(id);
             }
         });
         p2.add(opcaoDeletar);

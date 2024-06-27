@@ -1,5 +1,7 @@
 package Forms.FuncoesFuncionario;
+import DAO.AgendamentoDAO;
 import DAO.FuncionarioDAO;
+import DTO.Agendamento;
 import DTO.Funcionario;
 import Forms.Alteracao.FuncionarioAlterar;
 import Forms.FuncionarioMenuForm;
@@ -14,6 +16,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class GerenciarFuncionarios extends JFrame {
     private Container c;
@@ -219,7 +222,6 @@ public class GerenciarFuncionarios extends JFrame {
                 c.setVisible(false);
                 dispose();
                 FuncionarioAlterar telaAterar = new FuncionarioAlterar(logado, alterado);
-                System.out.println(id);
             }
         });
         p2.add(opcaoAlterar);
@@ -254,11 +256,19 @@ public class GerenciarFuncionarios extends JFrame {
                     return;
                 }
                 int id = (int) tabela.getValueAt(row, 0);
+                System.out.println(String.format("id: %d", id));
+                System.out.println(String.format("id logado: %d", logado.getId()));
+                System.out.println(String.format("row: %s", row));
                 int dialogButton = JOptionPane.showConfirmDialog (null, String.format("Tem certeza que quer excluir o funcionário de id %d?", id),"Confirmação",JOptionPane.YES_NO_OPTION);
                 if(dialogButton == JOptionPane.YES_OPTION) {
-                    if (row == logado.getId()) {
+                    if (id == logado.getId()) {
                         JOptionPane.showMessageDialog(null, "Você não pode excluir o prórpio registro", "Erro", JOptionPane.ERROR_MESSAGE);
-                        remove(dialogButton);
+                        return;
+                    }
+                    AgendamentoDAO agDAO = new AgendamentoDAO();
+                    List<Agendamento> agendados = agDAO.pesquisaColuna(String.valueOf(id), "funcionario");
+                    if (!agendados.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Esse funcionário é responsável por um agendamento marcado. Exclua o agendamento para prosseguir", "Erro", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
                     viewportTabela.setVisible(false);
@@ -270,7 +280,6 @@ public class GerenciarFuncionarios extends JFrame {
                     JOptionPane.showMessageDialog(null, "Funcionário excluído!", "Sucesso", JOptionPane.DEFAULT_OPTION);
 
                 }
-                System.out.println(id);
             }
         });
         p2.add(opcaoDeletar);

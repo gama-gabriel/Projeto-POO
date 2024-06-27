@@ -1,6 +1,7 @@
 package Forms.Cadastro;
 
 import DAO.PacienteDAO;
+import DTO.Funcionario;
 import DTO.Paciente;
 import Forms.PacienteMenuForm;
 
@@ -138,7 +139,8 @@ public class PacienteCadastro extends JFrame {
                     JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
                     c.setVisible(false);
                     dispose();
-                    PacienteMenuForm telaPaciente = new PacienteMenuForm(novoUsuario);
+                    Paciente logado = novoUsuario.dao.pesquisaColuna(emailField.getText(), "email").get(0);
+                    PacienteMenuForm telaPaciente = new PacienteMenuForm(logado);
                 }
             }
         });

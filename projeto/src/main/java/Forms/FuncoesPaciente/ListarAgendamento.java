@@ -50,7 +50,6 @@ public class ListarAgendamento extends JFrame {
         modeloTabela = new AgendamentoTableModel();
         dao = new AgendamentoDAO();
         modeloTabela.setDados(dao.retornaLista("",logado.getId()));
-        System.out.println(modeloTabela.getDados().get(0).getSupervisor().getId());
 
         setTitle("Gerenciamento de agendamentos");
         setSize(1000, 600);
